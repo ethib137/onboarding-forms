@@ -1,0 +1,10 @@
+Bundle-Name: onboarding-form-api
+Bundle-SymbolicName: com.liferay.onboarding.form.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.onboarding.form.exception,\
+	com.liferay.onboarding.form.model,\
+	com.liferay.onboarding.form.service,\
+	com.liferay.onboarding.form.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../onboarding-form-service/service.xml

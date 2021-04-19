@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.3.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_3_0.dtd">
+
+<service-builder dependency-injector="ds" package-path="com.liferay.form.onboarding">
+	<author>Evan Thibodeau</author>
+	<namespace>OBForm</namespace>
+	<entity local-service="true" remote-service="true" name="OBFormEntry" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="obFormEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+		<column name="name" type="String" />
+
+		<!-- Order -->
+		<column name="formId" type="long"></column>
+		<column name="roleIds" type="String"></column>
+		<column name="siteIds" type="String"></column>
+		<column name="active" type="boolean"></column>
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="groupId" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+		</finder>
+		<finder name="n_g" return-type="Collection">
+			<finder-column name="name" />
+			<finder-column name="groupId"></finder-column>
+		</finder>
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+	</entity>
+	<entity name="OBFormFieldMapping" local-service="true">
+		<column name="obFormFieldId" type="long" primary="true"></column>
+		<column name="userPropertyName" type="String"></column>
+		<column name="formFieldId" type="long"></column>
+		<column name="obFormEntryId" type="long"></column>
+
+		<!-- Finder methods -->
+
+		<finder return-type="Collection" name="obFormEntryId">
+			<finder-column name="obFormEntryId"></finder-column>
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>OBFormEntryName</exception>
+	</exceptions>
+</service-builder>

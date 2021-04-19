@@ -1,0 +1,6 @@
+Bundle-Name: onboarding-form-service
+Bundle-SymbolicName: com.liferay.onboarding.form.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+-dsannotations-options: inherit

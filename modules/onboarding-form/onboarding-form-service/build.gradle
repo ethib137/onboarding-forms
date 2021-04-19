@@ -1,0 +1,11 @@
+dependencies {
+	compile project(":modules:onboarding-form:onboarding-form-api")
+
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+}
+
+buildService {
+	apiDir = "../onboarding-form-api/src/main/java"
+}
+
+group = "com.liferay.onboarding.form"
