@@ -37,6 +37,13 @@ public class OBFormEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.form.onboarding.service.impl.OBFormEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.form.onboarding.model.OBFormEntry addOBFormEntry(
+			long userId, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addOBFormEntry(userId, name, serviceContext);
+	}
 
 	/**
 	 * Adds the ob form entry to the database. Also notifies the appropriate model listeners.
@@ -85,11 +92,13 @@ public class OBFormEntryLocalServiceUtil {
 	 *
 	 * @param obFormEntryId the primary key of the ob form entry
 	 * @return the ob form entry that was removed
+	 * @throws NoSuchEntryException
 	 * @throws PortalException if a ob form entry with the primary key could not be found
 	 */
 	public static com.liferay.form.onboarding.model.OBFormEntry
 			deleteOBFormEntry(long obFormEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.form.onboarding.exception.NoSuchEntryException,
+			   com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteOBFormEntry(obFormEntryId);
 	}
@@ -264,6 +273,27 @@ public class OBFormEntryLocalServiceUtil {
 		return getService().getOBFormEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.form.onboarding.model.OBFormEntry>
+		getOBFormEntries(long groupId) {
+
+		return getService().getOBFormEntries(groupId);
+	}
+
+	public static java.util.List<com.liferay.form.onboarding.model.OBFormEntry>
+		getOBFormEntries(long groupId, int start, int end) {
+
+		return getService().getOBFormEntries(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.form.onboarding.model.OBFormEntry>
+		getOBFormEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.form.onboarding.model.OBFormEntry> obc) {
+
+		return getService().getOBFormEntries(groupId, start, end, obc);
+	}
+
 	/**
 	 * Returns all the ob form entries matching the UUID and company.
 	 *
@@ -305,6 +335,10 @@ public class OBFormEntryLocalServiceUtil {
 	 */
 	public static int getOBFormEntriesCount() {
 		return getService().getOBFormEntriesCount();
+	}
+
+	public static int getOBFormEntriesCount(long groupId) {
+		return getService().getOBFormEntriesCount(groupId);
 	}
 
 	/**
@@ -353,6 +387,16 @@ public class OBFormEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.form.onboarding.model.OBFormEntry
+			updateOBFormEntry(
+				long userId, long formOBEntryId, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateOBFormEntry(
+			userId, formOBEntryId, name, serviceContext);
 	}
 
 	/**

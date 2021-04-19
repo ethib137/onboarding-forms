@@ -116,12 +116,13 @@ public abstract class OBFormEntryLocalServiceBaseImpl
 	 *
 	 * @param obFormEntryId the primary key of the ob form entry
 	 * @return the ob form entry that was removed
+	 * @throws NoSuchEntryException
 	 * @throws PortalException if a ob form entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public OBFormEntry deleteOBFormEntry(long obFormEntryId)
-		throws PortalException {
+		throws NoSuchEntryException, PortalException {
 
 		return obFormEntryPersistence.remove(obFormEntryId);
 	}
