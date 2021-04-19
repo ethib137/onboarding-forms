@@ -1,0 +1,4 @@
+Bundle-Name: onboarding-form-web
+Bundle-SymbolicName: com.liferay.onboarding.form.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.onboarding.form.portlet.constants
