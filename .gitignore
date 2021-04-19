@@ -13,6 +13,7 @@
 **/.web_bundle_build
 .gradle
 .idea
+.run
 /bundles
 /gradle-*.properties
 /plugins-sdk/**/classes
