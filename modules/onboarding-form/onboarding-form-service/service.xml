@@ -4,7 +4,7 @@
 <service-builder dependency-injector="ds" package-path="com.liferay.form.onboarding">
 	<author>Evan Thibodeau</author>
 	<namespace>OBForm</namespace>
-	<entity local-service="true" remote-service="true" name="OBFormEntry" uuid="true">
+	<entity local-service="true" name="OBFormEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -27,8 +27,11 @@
 
 		<!-- Order -->
 		<column name="formId" type="long"></column>
+		<column name="organizationIds" type="String"></column>
 		<column name="roleIds" type="String"></column>
 		<column name="siteIds" type="String"></column>
+		<column name="userGroupIds" type="String"></column>
+		<column name="sendEmail" type="boolean"></column>
 		<column name="active" type="boolean"></column>
 
 		<order by="desc">
@@ -40,26 +43,34 @@
 		<finder name="groupId" return-type="Collection">
 			<finder-column name="groupId"></finder-column>
 		</finder>
+		<finder name="formId" return-type="OBFormEntry">
+			<finder-column name="formId"></finder-column>
+		</finder>
 		<finder name="n_g" return-type="Collection">
-			<finder-column name="name" />
 			<finder-column name="groupId"></finder-column>
+			<finder-column name="name"></finder-column>
 		</finder>
 
 		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="OBFormFieldMapping" local-service="true">
-		<column name="obFormFieldId" type="long" primary="true"></column>
+	<entity local-service="true" name="OBFormFieldMapping">
+		<column name="obFormFieldMappingId" type="long" primary="true"></column>
 		<column name="userPropertyName" type="String"></column>
-		<column name="formFieldId" type="long"></column>
+		<column name="formFieldReference" type="String"></column>
 		<column name="obFormEntryId" type="long"></column>
 
 		<!-- Finder methods -->
 
-		<finder return-type="Collection" name="obFormEntryId">
+		<finder name="obFormEntryId" return-type="Collection">
+			<finder-column name="obFormEntryId"></finder-column>
+		</finder>
+		<finder name="o_f" return-type="OBFormFieldMapping">
+			<finder-column name="formFieldReference"></finder-column>
 			<finder-column name="obFormEntryId"></finder-column>
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>OBFormEntryForm</exception>
 		<exception>OBFormEntryName</exception>
 	</exceptions>
 </service-builder>

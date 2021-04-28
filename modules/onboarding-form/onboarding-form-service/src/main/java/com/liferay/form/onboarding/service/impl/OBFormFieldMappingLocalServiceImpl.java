@@ -14,8 +14,12 @@
 
 package com.liferay.form.onboarding.service.impl;
 
+import com.liferay.form.onboarding.model.OBFormFieldMapping;
 import com.liferay.form.onboarding.service.base.OBFormFieldMappingLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,9 +43,102 @@ import org.osgi.service.component.annotations.Component;
 public class OBFormFieldMappingLocalServiceImpl
 	extends OBFormFieldMappingLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.form.onboarding.service.OBFormFieldMappingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.form.onboarding.service.OBFormFieldMappingLocalServiceUtil</code>.
 	 */
+	public OBFormFieldMapping addOBFormFieldMapping(
+		long obFormEntryId, String formFieldReference,
+		String userPropertyName) {
+
+		long obFormFieldMappingId = counterLocalService.increment();
+
+		OBFormFieldMapping obFormFieldMapping =
+			obFormFieldMappingPersistence.create(obFormFieldMappingId);
+
+		obFormFieldMapping.setObFormEntryId(obFormEntryId);
+		obFormFieldMapping.setFormFieldReference(formFieldReference);
+		obFormFieldMapping.setUserPropertyName(userPropertyName);
+
+		return updateOBFormFieldMapping(obFormFieldMapping);
+	}
+
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+			long obFormFieldMappingId)
+		throws PortalException {
+
+		OBFormFieldMapping obFormFieldMapping = getOBFormFieldMapping(
+			obFormFieldMappingId);
+
+		return deleteOBFormFieldMapping(obFormFieldMapping);
+	}
+
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+			long obFormEntryId, String formFieldReference)
+		throws PortalException {
+
+		OBFormFieldMapping obFormFieldMapping = getOBFormFieldMapping(
+			obFormEntryId, formFieldReference);
+
+		return obFormFieldMappingPersistence.remove(obFormFieldMapping);
+	}
+
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+		OBFormFieldMapping obFormFieldMapping) {
+
+		return obFormFieldMappingPersistence.remove(obFormFieldMapping);
+	}
+
+	public OBFormFieldMapping getOBFormFieldMapping(long obFormFieldMappingId)
+		throws PortalException {
+
+		return obFormFieldMappingPersistence.findByPrimaryKey(
+			obFormFieldMappingId);
+	}
+
+	public OBFormFieldMapping getOBFormFieldMapping(
+			long obFormEntryId, String formFieldReference)
+		throws PortalException {
+
+		return obFormFieldMappingPersistence.findByo_f(
+			formFieldReference, obFormEntryId);
+	}
+
+	public List<OBFormFieldMapping> getOBFormFieldMappings(long obFormEntryId) {
+		return obFormFieldMappingPersistence.findByobFormEntryId(obFormEntryId);
+	}
+
+	public List<OBFormFieldMapping> getOBFormFieldMappings(
+		long obFormEntryId, int start, int end) {
+
+		return obFormFieldMappingPersistence.findByobFormEntryId(
+			obFormEntryId, start, end);
+	}
+
+	public int getOBFormFieldMappingsCount(long obFormEntryId) {
+		return obFormFieldMappingPersistence.countByobFormEntryId(
+			obFormEntryId);
+	}
+
+	public OBFormFieldMapping updateOBFormFieldMapping(
+			long obFormFieldMappingId, String formFieldReference,
+			String userPropertyName)
+		throws PortalException {
+
+		OBFormFieldMapping obFormFieldMapping = getOBFormFieldMapping(
+			obFormFieldMappingId);
+
+		obFormFieldMapping.setFormFieldReference(formFieldReference);
+		obFormFieldMapping.setUserPropertyName(userPropertyName);
+
+		return updateOBFormFieldMapping(obFormFieldMapping);
+	}
+
+	public OBFormFieldMapping updateOBFormFieldMapping(
+		OBFormFieldMapping obFormFieldMapping) {
+
+		return obFormFieldMappingPersistence.update(obFormFieldMapping);
+	}
+
 }
