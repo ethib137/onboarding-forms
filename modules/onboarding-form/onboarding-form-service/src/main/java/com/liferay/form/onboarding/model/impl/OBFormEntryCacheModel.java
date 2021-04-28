@@ -62,7 +62,7 @@ public class OBFormEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,10 +84,16 @@ public class OBFormEntryCacheModel
 		sb.append(name);
 		sb.append(", formId=");
 		sb.append(formId);
+		sb.append(", organizationIds=");
+		sb.append(organizationIds);
 		sb.append(", roleIds=");
 		sb.append(roleIds);
 		sb.append(", siteIds=");
 		sb.append(siteIds);
+		sb.append(", userGroupIds=");
+		sb.append(userGroupIds);
+		sb.append(", sendEmail=");
+		sb.append(sendEmail);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append("}");
@@ -141,6 +147,13 @@ public class OBFormEntryCacheModel
 
 		obFormEntryImpl.setFormId(formId);
 
+		if (organizationIds == null) {
+			obFormEntryImpl.setOrganizationIds("");
+		}
+		else {
+			obFormEntryImpl.setOrganizationIds(organizationIds);
+		}
+
 		if (roleIds == null) {
 			obFormEntryImpl.setRoleIds("");
 		}
@@ -155,6 +168,14 @@ public class OBFormEntryCacheModel
 			obFormEntryImpl.setSiteIds(siteIds);
 		}
 
+		if (userGroupIds == null) {
+			obFormEntryImpl.setUserGroupIds("");
+		}
+		else {
+			obFormEntryImpl.setUserGroupIds(userGroupIds);
+		}
+
+		obFormEntryImpl.setSendEmail(sendEmail);
 		obFormEntryImpl.setActive(active);
 
 		obFormEntryImpl.resetOriginalValues();
@@ -179,8 +200,12 @@ public class OBFormEntryCacheModel
 		name = objectInput.readUTF();
 
 		formId = objectInput.readLong();
+		organizationIds = objectInput.readUTF();
 		roleIds = objectInput.readUTF();
 		siteIds = objectInput.readUTF();
+		userGroupIds = objectInput.readUTF();
+
+		sendEmail = objectInput.readBoolean();
 
 		active = objectInput.readBoolean();
 	}
@@ -221,6 +246,13 @@ public class OBFormEntryCacheModel
 
 		objectOutput.writeLong(formId);
 
+		if (organizationIds == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(organizationIds);
+		}
+
 		if (roleIds == null) {
 			objectOutput.writeUTF("");
 		}
@@ -235,6 +267,15 @@ public class OBFormEntryCacheModel
 			objectOutput.writeUTF(siteIds);
 		}
 
+		if (userGroupIds == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userGroupIds);
+		}
+
+		objectOutput.writeBoolean(sendEmail);
+
 		objectOutput.writeBoolean(active);
 	}
 
@@ -248,8 +289,11 @@ public class OBFormEntryCacheModel
 	public long modifiedDate;
 	public String name;
 	public long formId;
+	public String organizationIds;
 	public String roleIds;
 	public String siteIds;
+	public String userGroupIds;
+	public boolean sendEmail;
 	public boolean active;
 
 }

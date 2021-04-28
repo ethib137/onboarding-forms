@@ -40,23 +40,24 @@ public interface OBFormFieldMapping
 	 * Never modify this interface directly. Add methods to <code>com.liferay.form.onboarding.model.impl.OBFormFieldMappingImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<OBFormFieldMapping, Long>
-		OB_FORM_FIELD_ID_ACCESSOR = new Accessor<OBFormFieldMapping, Long>() {
+		OB_FORM_FIELD_MAPPING_ID_ACCESSOR =
+			new Accessor<OBFormFieldMapping, Long>() {
 
-			@Override
-			public Long get(OBFormFieldMapping obFormFieldMapping) {
-				return obFormFieldMapping.getObFormFieldId();
-			}
+				@Override
+				public Long get(OBFormFieldMapping obFormFieldMapping) {
+					return obFormFieldMapping.getObFormFieldMappingId();
+				}
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
 
-			@Override
-			public Class<OBFormFieldMapping> getTypeClass() {
-				return OBFormFieldMapping.class;
-			}
+				@Override
+				public Class<OBFormFieldMapping> getTypeClass() {
+					return OBFormFieldMapping.class;
+				}
 
-		};
+			};
 
 }

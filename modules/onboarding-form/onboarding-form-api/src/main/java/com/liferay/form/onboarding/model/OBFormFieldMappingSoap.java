@@ -32,9 +32,9 @@ public class OBFormFieldMappingSoap implements Serializable {
 	public static OBFormFieldMappingSoap toSoapModel(OBFormFieldMapping model) {
 		OBFormFieldMappingSoap soapModel = new OBFormFieldMappingSoap();
 
-		soapModel.setObFormFieldId(model.getObFormFieldId());
+		soapModel.setObFormFieldMappingId(model.getObFormFieldMappingId());
 		soapModel.setUserPropertyName(model.getUserPropertyName());
-		soapModel.setFormFieldId(model.getFormFieldId());
+		soapModel.setFormFieldReference(model.getFormFieldReference());
 		soapModel.setObFormEntryId(model.getObFormEntryId());
 
 		return soapModel;
@@ -91,19 +91,19 @@ public class OBFormFieldMappingSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _obFormFieldId;
+		return _obFormFieldMappingId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setObFormFieldId(pk);
+		setObFormFieldMappingId(pk);
 	}
 
-	public long getObFormFieldId() {
-		return _obFormFieldId;
+	public long getObFormFieldMappingId() {
+		return _obFormFieldMappingId;
 	}
 
-	public void setObFormFieldId(long obFormFieldId) {
-		_obFormFieldId = obFormFieldId;
+	public void setObFormFieldMappingId(long obFormFieldMappingId) {
+		_obFormFieldMappingId = obFormFieldMappingId;
 	}
 
 	public String getUserPropertyName() {
@@ -114,12 +114,12 @@ public class OBFormFieldMappingSoap implements Serializable {
 		_userPropertyName = userPropertyName;
 	}
 
-	public long getFormFieldId() {
-		return _formFieldId;
+	public String getFormFieldReference() {
+		return _formFieldReference;
 	}
 
-	public void setFormFieldId(long formFieldId) {
-		_formFieldId = formFieldId;
+	public void setFormFieldReference(String formFieldReference) {
+		_formFieldReference = formFieldReference;
 	}
 
 	public long getObFormEntryId() {
@@ -130,9 +130,9 @@ public class OBFormFieldMappingSoap implements Serializable {
 		_obFormEntryId = obFormEntryId;
 	}
 
-	private long _obFormFieldId;
+	private long _obFormFieldMappingId;
 	private String _userPropertyName;
-	private long _formFieldId;
+	private String _formFieldReference;
 	private long _obFormEntryId;
 
 }

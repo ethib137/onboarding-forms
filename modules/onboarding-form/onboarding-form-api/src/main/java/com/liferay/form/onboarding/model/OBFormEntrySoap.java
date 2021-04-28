@@ -43,8 +43,11 @@ public class OBFormEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setFormId(model.getFormId());
+		soapModel.setOrganizationIds(model.getOrganizationIds());
 		soapModel.setRoleIds(model.getRoleIds());
 		soapModel.setSiteIds(model.getSiteIds());
+		soapModel.setUserGroupIds(model.getUserGroupIds());
+		soapModel.setSendEmail(model.isSendEmail());
 		soapModel.setActive(model.isActive());
 
 		return soapModel;
@@ -179,6 +182,14 @@ public class OBFormEntrySoap implements Serializable {
 		_formId = formId;
 	}
 
+	public String getOrganizationIds() {
+		return _organizationIds;
+	}
+
+	public void setOrganizationIds(String organizationIds) {
+		_organizationIds = organizationIds;
+	}
+
 	public String getRoleIds() {
 		return _roleIds;
 	}
@@ -193,6 +204,26 @@ public class OBFormEntrySoap implements Serializable {
 
 	public void setSiteIds(String siteIds) {
 		_siteIds = siteIds;
+	}
+
+	public String getUserGroupIds() {
+		return _userGroupIds;
+	}
+
+	public void setUserGroupIds(String userGroupIds) {
+		_userGroupIds = userGroupIds;
+	}
+
+	public boolean getSendEmail() {
+		return _sendEmail;
+	}
+
+	public boolean isSendEmail() {
+		return _sendEmail;
+	}
+
+	public void setSendEmail(boolean sendEmail) {
+		_sendEmail = sendEmail;
 	}
 
 	public boolean getActive() {
@@ -217,8 +248,11 @@ public class OBFormEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private long _formId;
+	private String _organizationIds;
 	private String _roleIds;
 	private String _siteIds;
+	private String _userGroupIds;
+	private boolean _sendEmail;
 	private boolean _active;
 
 }

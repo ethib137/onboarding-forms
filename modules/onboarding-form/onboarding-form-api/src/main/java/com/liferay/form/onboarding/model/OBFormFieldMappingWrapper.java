@@ -41,9 +41,9 @@ public class OBFormFieldMappingWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("obFormFieldId", getObFormFieldId());
+		attributes.put("obFormFieldMappingId", getObFormFieldMappingId());
 		attributes.put("userPropertyName", getUserPropertyName());
-		attributes.put("formFieldId", getFormFieldId());
+		attributes.put("formFieldReference", getFormFieldReference());
 		attributes.put("obFormEntryId", getObFormEntryId());
 
 		return attributes;
@@ -51,10 +51,11 @@ public class OBFormFieldMappingWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long obFormFieldId = (Long)attributes.get("obFormFieldId");
+		Long obFormFieldMappingId = (Long)attributes.get(
+			"obFormFieldMappingId");
 
-		if (obFormFieldId != null) {
-			setObFormFieldId(obFormFieldId);
+		if (obFormFieldMappingId != null) {
+			setObFormFieldMappingId(obFormFieldMappingId);
 		}
 
 		String userPropertyName = (String)attributes.get("userPropertyName");
@@ -63,10 +64,11 @@ public class OBFormFieldMappingWrapper
 			setUserPropertyName(userPropertyName);
 		}
 
-		Long formFieldId = (Long)attributes.get("formFieldId");
+		String formFieldReference = (String)attributes.get(
+			"formFieldReference");
 
-		if (formFieldId != null) {
-			setFormFieldId(formFieldId);
+		if (formFieldReference != null) {
+			setFormFieldReference(formFieldReference);
 		}
 
 		Long obFormEntryId = (Long)attributes.get("obFormEntryId");
@@ -77,13 +79,13 @@ public class OBFormFieldMappingWrapper
 	}
 
 	/**
-	 * Returns the form field ID of this ob form field mapping.
+	 * Returns the form field reference of this ob form field mapping.
 	 *
-	 * @return the form field ID of this ob form field mapping
+	 * @return the form field reference of this ob form field mapping
 	 */
 	@Override
-	public long getFormFieldId() {
-		return model.getFormFieldId();
+	public String getFormFieldReference() {
+		return model.getFormFieldReference();
 	}
 
 	/**
@@ -97,13 +99,13 @@ public class OBFormFieldMappingWrapper
 	}
 
 	/**
-	 * Returns the ob form field ID of this ob form field mapping.
+	 * Returns the ob form field mapping ID of this ob form field mapping.
 	 *
-	 * @return the ob form field ID of this ob form field mapping
+	 * @return the ob form field mapping ID of this ob form field mapping
 	 */
 	@Override
-	public long getObFormFieldId() {
-		return model.getObFormFieldId();
+	public long getObFormFieldMappingId() {
+		return model.getObFormFieldMappingId();
 	}
 
 	/**
@@ -132,13 +134,13 @@ public class OBFormFieldMappingWrapper
 	}
 
 	/**
-	 * Sets the form field ID of this ob form field mapping.
+	 * Sets the form field reference of this ob form field mapping.
 	 *
-	 * @param formFieldId the form field ID of this ob form field mapping
+	 * @param formFieldReference the form field reference of this ob form field mapping
 	 */
 	@Override
-	public void setFormFieldId(long formFieldId) {
-		model.setFormFieldId(formFieldId);
+	public void setFormFieldReference(String formFieldReference) {
+		model.setFormFieldReference(formFieldReference);
 	}
 
 	/**
@@ -152,13 +154,13 @@ public class OBFormFieldMappingWrapper
 	}
 
 	/**
-	 * Sets the ob form field ID of this ob form field mapping.
+	 * Sets the ob form field mapping ID of this ob form field mapping.
 	 *
-	 * @param obFormFieldId the ob form field ID of this ob form field mapping
+	 * @param obFormFieldMappingId the ob form field mapping ID of this ob form field mapping
 	 */
 	@Override
-	public void setObFormFieldId(long obFormFieldId) {
-		model.setObFormFieldId(obFormFieldId);
+	public void setObFormFieldMappingId(long obFormFieldMappingId) {
+		model.setObFormFieldMappingId(obFormFieldMappingId);
 	}
 
 	/**

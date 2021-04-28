@@ -158,14 +158,14 @@ public interface OBFormFieldMappingPersistence
 	/**
 	 * Returns the ob form field mappings before and after the current ob form field mapping in the ordered set where obFormEntryId = &#63;.
 	 *
-	 * @param obFormFieldId the primary key of the current ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the current ob form field mapping
 	 * @param obFormEntryId the ob form entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ob form field mapping
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
 	public OBFormFieldMapping[] findByobFormEntryId_PrevAndNext(
-			long obFormFieldId, long obFormEntryId,
+			long obFormFieldMappingId, long obFormEntryId,
 			com.liferay.portal.kernel.util.OrderByComparator<OBFormFieldMapping>
 				orderByComparator)
 		throws NoSuchFieldMappingException;
@@ -186,6 +186,59 @@ public interface OBFormFieldMappingPersistence
 	public int countByobFormEntryId(long obFormEntryId);
 
 	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping
+	 * @throws NoSuchFieldMappingException if a matching ob form field mapping could not be found
+	 */
+	public OBFormFieldMapping findByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws NoSuchFieldMappingException;
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	public OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId);
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	public OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId, boolean useFinderCache);
+
+	/**
+	 * Removes the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; from the database.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the ob form field mapping that was removed
+	 */
+	public OBFormFieldMapping removeByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws NoSuchFieldMappingException;
+
+	/**
+	 * Returns the number of ob form field mappings where formFieldReference = &#63; and obFormEntryId = &#63;.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the number of matching ob form field mappings
+	 */
+	public int countByo_f(String formFieldReference, long obFormEntryId);
+
+	/**
 	 * Caches the ob form field mapping in the entity cache if it is enabled.
 	 *
 	 * @param obFormFieldMapping the ob form field mapping
@@ -203,19 +256,19 @@ public interface OBFormFieldMappingPersistence
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
-	public OBFormFieldMapping create(long obFormFieldId);
+	public OBFormFieldMapping create(long obFormFieldMappingId);
 
 	/**
 	 * Removes the ob form field mapping with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
-	public OBFormFieldMapping remove(long obFormFieldId)
+	public OBFormFieldMapping remove(long obFormFieldMappingId)
 		throws NoSuchFieldMappingException;
 
 	public OBFormFieldMapping updateImpl(OBFormFieldMapping obFormFieldMapping);
@@ -223,20 +276,20 @@ public interface OBFormFieldMappingPersistence
 	/**
 	 * Returns the ob form field mapping with the primary key or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
-	public OBFormFieldMapping findByPrimaryKey(long obFormFieldId)
+	public OBFormFieldMapping findByPrimaryKey(long obFormFieldMappingId)
 		throws NoSuchFieldMappingException;
 
 	/**
 	 * Returns the ob form field mapping with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping, or <code>null</code> if a ob form field mapping with the primary key could not be found
 	 */
-	public OBFormFieldMapping fetchByPrimaryKey(long obFormFieldId);
+	public OBFormFieldMapping fetchByPrimaryKey(long obFormFieldMappingId);
 
 	/**
 	 * Returns all the ob form field mappings.

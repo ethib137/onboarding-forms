@@ -53,8 +53,11 @@ public class OBFormEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("formId", getFormId());
+		attributes.put("organizationIds", getOrganizationIds());
 		attributes.put("roleIds", getRoleIds());
 		attributes.put("siteIds", getSiteIds());
+		attributes.put("userGroupIds", getUserGroupIds());
+		attributes.put("sendEmail", isSendEmail());
 		attributes.put("active", isActive());
 
 		return attributes;
@@ -122,6 +125,12 @@ public class OBFormEntryWrapper
 			setFormId(formId);
 		}
 
+		String organizationIds = (String)attributes.get("organizationIds");
+
+		if (organizationIds != null) {
+			setOrganizationIds(organizationIds);
+		}
+
 		String roleIds = (String)attributes.get("roleIds");
 
 		if (roleIds != null) {
@@ -132,6 +141,18 @@ public class OBFormEntryWrapper
 
 		if (siteIds != null) {
 			setSiteIds(siteIds);
+		}
+
+		String userGroupIds = (String)attributes.get("userGroupIds");
+
+		if (userGroupIds != null) {
+			setUserGroupIds(userGroupIds);
+		}
+
+		Boolean sendEmail = (Boolean)attributes.get("sendEmail");
+
+		if (sendEmail != null) {
+			setSendEmail(sendEmail);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -222,6 +243,21 @@ public class OBFormEntryWrapper
 	}
 
 	/**
+	 * Returns the organization IDs of this ob form entry.
+	 *
+	 * @return the organization IDs of this ob form entry
+	 */
+	@Override
+	public String getOrganizationIds() {
+		return model.getOrganizationIds();
+	}
+
+	@Override
+	public long[] getOrganizationIdsAsLongs() {
+		return model.getOrganizationIdsAsLongs();
+	}
+
+	/**
 	 * Returns the primary key of this ob form entry.
 	 *
 	 * @return the primary key of this ob form entry
@@ -241,6 +277,21 @@ public class OBFormEntryWrapper
 		return model.getRoleIds();
 	}
 
+	@Override
+	public long[] getRoleIdsAsLongs() {
+		return model.getRoleIdsAsLongs();
+	}
+
+	/**
+	 * Returns the send email of this ob form entry.
+	 *
+	 * @return the send email of this ob form entry
+	 */
+	@Override
+	public boolean getSendEmail() {
+		return model.getSendEmail();
+	}
+
 	/**
 	 * Returns the site IDs of this ob form entry.
 	 *
@@ -249,6 +300,26 @@ public class OBFormEntryWrapper
 	@Override
 	public String getSiteIds() {
 		return model.getSiteIds();
+	}
+
+	@Override
+	public long[] getSiteIdsAsLongs() {
+		return model.getSiteIdsAsLongs();
+	}
+
+	/**
+	 * Returns the user group IDs of this ob form entry.
+	 *
+	 * @return the user group IDs of this ob form entry
+	 */
+	@Override
+	public String getUserGroupIds() {
+		return model.getUserGroupIds();
+	}
+
+	@Override
+	public long[] getUserGroupIdsAsLongs() {
+		return model.getUserGroupIdsAsLongs();
 	}
 
 	/**
@@ -299,6 +370,16 @@ public class OBFormEntryWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this ob form entry is send email.
+	 *
+	 * @return <code>true</code> if this ob form entry is send email; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSendEmail() {
+		return model.isSendEmail();
 	}
 
 	@Override
@@ -386,6 +467,21 @@ public class OBFormEntryWrapper
 		model.setObFormEntryId(obFormEntryId);
 	}
 
+	@Override
+	public void setOrganizationIds(long[] organizationIds) {
+		model.setOrganizationIds(organizationIds);
+	}
+
+	/**
+	 * Sets the organization IDs of this ob form entry.
+	 *
+	 * @param organizationIds the organization IDs of this ob form entry
+	 */
+	@Override
+	public void setOrganizationIds(String organizationIds) {
+		model.setOrganizationIds(organizationIds);
+	}
+
 	/**
 	 * Sets the primary key of this ob form entry.
 	 *
@@ -394,6 +490,11 @@ public class OBFormEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	@Override
+	public void setRoldIds(long[] roleIds) {
+		model.setRoldIds(roleIds);
 	}
 
 	/**
@@ -407,6 +508,21 @@ public class OBFormEntryWrapper
 	}
 
 	/**
+	 * Sets whether this ob form entry is send email.
+	 *
+	 * @param sendEmail the send email of this ob form entry
+	 */
+	@Override
+	public void setSendEmail(boolean sendEmail) {
+		model.setSendEmail(sendEmail);
+	}
+
+	@Override
+	public void setSiteIds(long[] siteIds) {
+		model.setSiteIds(siteIds);
+	}
+
+	/**
 	 * Sets the site IDs of this ob form entry.
 	 *
 	 * @param siteIds the site IDs of this ob form entry
@@ -414,6 +530,21 @@ public class OBFormEntryWrapper
 	@Override
 	public void setSiteIds(String siteIds) {
 		model.setSiteIds(siteIds);
+	}
+
+	@Override
+	public void setUserGroupIds(long[] userGroupIds) {
+		model.setUserGroupIds(userGroupIds);
+	}
+
+	/**
+	 * Sets the user group IDs of this ob form entry.
+	 *
+	 * @param userGroupIds the user group IDs of this ob form entry
+	 */
+	@Override
+	public void setUserGroupIds(String userGroupIds) {
+		model.setUserGroupIds(userGroupIds);
 	}
 
 	/**

@@ -17,22 +17,22 @@ package com.liferay.form.onboarding.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Evan Thibodeau
  */
-public class OBFormEntryNameException extends PortalException {
+public class OBFormEntryFormException extends PortalException {
 
-	public OBFormEntryNameException() {
+	public OBFormEntryFormException() {
 	}
 
-	public OBFormEntryNameException(String msg) {
+	public OBFormEntryFormException(String msg) {
 		super(msg);
 	}
 
-	public OBFormEntryNameException(String msg, Throwable throwable) {
+	public OBFormEntryFormException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public OBFormEntryNameException(Throwable throwable) {
+	public OBFormEntryFormException(Throwable throwable) {
 		super(throwable);
 	}
 

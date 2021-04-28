@@ -41,9 +41,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class OBFormEntryServiceImpl extends OBFormEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.form.onboarding.service.OBFormEntryServiceUtil</code> to access the ob form entry remote service.
 	 */
+
 }

@@ -268,20 +268,20 @@ public class OBFormFieldMappingUtil {
 	/**
 	 * Returns the ob form field mappings before and after the current ob form field mapping in the ordered set where obFormEntryId = &#63;.
 	 *
-	 * @param obFormFieldId the primary key of the current ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the current ob form field mapping
 	 * @param obFormEntryId the ob form entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ob form field mapping
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
 	public static OBFormFieldMapping[] findByobFormEntryId_PrevAndNext(
-			long obFormFieldId, long obFormEntryId,
+			long obFormFieldMappingId, long obFormEntryId,
 			OrderByComparator<OBFormFieldMapping> orderByComparator)
 		throws com.liferay.form.onboarding.exception.
 			NoSuchFieldMappingException {
 
 		return getPersistence().findByobFormEntryId_PrevAndNext(
-			obFormFieldId, obFormEntryId, orderByComparator);
+			obFormFieldMappingId, obFormEntryId, orderByComparator);
 	}
 
 	/**
@@ -301,6 +301,78 @@ public class OBFormFieldMappingUtil {
 	 */
 	public static int countByobFormEntryId(long obFormEntryId) {
 		return getPersistence().countByobFormEntryId(obFormEntryId);
+	}
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping
+	 * @throws NoSuchFieldMappingException if a matching ob form field mapping could not be found
+	 */
+	public static OBFormFieldMapping findByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws com.liferay.form.onboarding.exception.
+			NoSuchFieldMappingException {
+
+		return getPersistence().findByo_f(formFieldReference, obFormEntryId);
+	}
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	public static OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId) {
+
+		return getPersistence().fetchByo_f(formFieldReference, obFormEntryId);
+	}
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	public static OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId, boolean useFinderCache) {
+
+		return getPersistence().fetchByo_f(
+			formFieldReference, obFormEntryId, useFinderCache);
+	}
+
+	/**
+	 * Removes the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; from the database.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the ob form field mapping that was removed
+	 */
+	public static OBFormFieldMapping removeByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws com.liferay.form.onboarding.exception.
+			NoSuchFieldMappingException {
+
+		return getPersistence().removeByo_f(formFieldReference, obFormEntryId);
+	}
+
+	/**
+	 * Returns the number of ob form field mappings where formFieldReference = &#63; and obFormEntryId = &#63;.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the number of matching ob form field mappings
+	 */
+	public static int countByo_f(
+		String formFieldReference, long obFormEntryId) {
+
+		return getPersistence().countByo_f(formFieldReference, obFormEntryId);
 	}
 
 	/**
@@ -326,25 +398,25 @@ public class OBFormFieldMappingUtil {
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
-	public static OBFormFieldMapping create(long obFormFieldId) {
-		return getPersistence().create(obFormFieldId);
+	public static OBFormFieldMapping create(long obFormFieldMappingId) {
+		return getPersistence().create(obFormFieldMappingId);
 	}
 
 	/**
 	 * Removes the ob form field mapping with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
-	public static OBFormFieldMapping remove(long obFormFieldId)
+	public static OBFormFieldMapping remove(long obFormFieldMappingId)
 		throws com.liferay.form.onboarding.exception.
 			NoSuchFieldMappingException {
 
-		return getPersistence().remove(obFormFieldId);
+		return getPersistence().remove(obFormFieldMappingId);
 	}
 
 	public static OBFormFieldMapping updateImpl(
@@ -356,25 +428,27 @@ public class OBFormFieldMappingUtil {
 	/**
 	 * Returns the ob form field mapping with the primary key or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
-	public static OBFormFieldMapping findByPrimaryKey(long obFormFieldId)
+	public static OBFormFieldMapping findByPrimaryKey(long obFormFieldMappingId)
 		throws com.liferay.form.onboarding.exception.
 			NoSuchFieldMappingException {
 
-		return getPersistence().findByPrimaryKey(obFormFieldId);
+		return getPersistence().findByPrimaryKey(obFormFieldMappingId);
 	}
 
 	/**
 	 * Returns the ob form field mapping with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping, or <code>null</code> if a ob form field mapping with the primary key could not be found
 	 */
-	public static OBFormFieldMapping fetchByPrimaryKey(long obFormFieldId) {
-		return getPersistence().fetchByPrimaryKey(obFormFieldId);
+	public static OBFormFieldMapping fetchByPrimaryKey(
+		long obFormFieldMappingId) {
+
+		return getPersistence().fetchByPrimaryKey(obFormFieldMappingId);
 	}
 
 	/**

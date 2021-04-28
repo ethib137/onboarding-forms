@@ -12,14 +12,17 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="formId" type="long" />
+		<field name="organizationIds" type="String" />
 		<field name="roleIds" type="String" />
 		<field name="siteIds" type="String" />
+		<field name="userGroupIds" type="String" />
+		<field name="sendEmail" type="boolean" />
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.form.onboarding.model.OBFormFieldMapping">
-		<field name="obFormFieldId" type="long" />
+		<field name="obFormFieldMappingId" type="long" />
 		<field name="userPropertyName" type="String" />
-		<field name="formFieldId" type="long" />
+		<field name="formFieldReference" type="String" />
 		<field name="obFormEntryId" type="long" />
 	</model>
 </model-hints>

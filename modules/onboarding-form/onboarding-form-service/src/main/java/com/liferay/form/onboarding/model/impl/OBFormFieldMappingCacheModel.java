@@ -46,7 +46,9 @@ public class OBFormFieldMappingCacheModel
 		OBFormFieldMappingCacheModel obFormFieldMappingCacheModel =
 			(OBFormFieldMappingCacheModel)object;
 
-		if (obFormFieldId == obFormFieldMappingCacheModel.obFormFieldId) {
+		if (obFormFieldMappingId ==
+				obFormFieldMappingCacheModel.obFormFieldMappingId) {
+
 			return true;
 		}
 
@@ -55,19 +57,19 @@ public class OBFormFieldMappingCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, obFormFieldId);
+		return HashUtil.hash(0, obFormFieldMappingId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("{obFormFieldId=");
-		sb.append(obFormFieldId);
+		sb.append("{obFormFieldMappingId=");
+		sb.append(obFormFieldMappingId);
 		sb.append(", userPropertyName=");
 		sb.append(userPropertyName);
-		sb.append(", formFieldId=");
-		sb.append(formFieldId);
+		sb.append(", formFieldReference=");
+		sb.append(formFieldReference);
 		sb.append(", obFormEntryId=");
 		sb.append(obFormEntryId);
 		sb.append("}");
@@ -80,7 +82,7 @@ public class OBFormFieldMappingCacheModel
 		OBFormFieldMappingImpl obFormFieldMappingImpl =
 			new OBFormFieldMappingImpl();
 
-		obFormFieldMappingImpl.setObFormFieldId(obFormFieldId);
+		obFormFieldMappingImpl.setObFormFieldMappingId(obFormFieldMappingId);
 
 		if (userPropertyName == null) {
 			obFormFieldMappingImpl.setUserPropertyName("");
@@ -89,7 +91,13 @@ public class OBFormFieldMappingCacheModel
 			obFormFieldMappingImpl.setUserPropertyName(userPropertyName);
 		}
 
-		obFormFieldMappingImpl.setFormFieldId(formFieldId);
+		if (formFieldReference == null) {
+			obFormFieldMappingImpl.setFormFieldReference("");
+		}
+		else {
+			obFormFieldMappingImpl.setFormFieldReference(formFieldReference);
+		}
+
 		obFormFieldMappingImpl.setObFormEntryId(obFormEntryId);
 
 		obFormFieldMappingImpl.resetOriginalValues();
@@ -99,17 +107,16 @@ public class OBFormFieldMappingCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		obFormFieldId = objectInput.readLong();
+		obFormFieldMappingId = objectInput.readLong();
 		userPropertyName = objectInput.readUTF();
-
-		formFieldId = objectInput.readLong();
+		formFieldReference = objectInput.readUTF();
 
 		obFormEntryId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(obFormFieldId);
+		objectOutput.writeLong(obFormFieldMappingId);
 
 		if (userPropertyName == null) {
 			objectOutput.writeUTF("");
@@ -118,14 +125,19 @@ public class OBFormFieldMappingCacheModel
 			objectOutput.writeUTF(userPropertyName);
 		}
 
-		objectOutput.writeLong(formFieldId);
+		if (formFieldReference == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(formFieldReference);
+		}
 
 		objectOutput.writeLong(obFormEntryId);
 	}
 
-	public long obFormFieldId;
+	public long obFormFieldMappingId;
 	public String userPropertyName;
-	public long formFieldId;
+	public String formFieldReference;
 	public long obFormEntryId;
 
 }

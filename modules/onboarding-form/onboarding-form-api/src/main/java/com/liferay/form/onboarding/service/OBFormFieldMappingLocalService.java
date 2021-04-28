@@ -62,6 +62,14 @@ public interface OBFormFieldMappingLocalService
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>OBFormFieldMappingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OBFormFieldMappingLocalServiceUtil</code>.
+	 */
+	public OBFormFieldMapping addOBFormFieldMapping(
+		long obFormEntryId, String formFieldReference, String userPropertyName);
+
+	/**
 	 * Adds the ob form field mapping to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -78,11 +86,12 @@ public interface OBFormFieldMappingLocalService
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
 	@Transactional(enabled = false)
-	public OBFormFieldMapping createOBFormFieldMapping(long obFormFieldId);
+	public OBFormFieldMapping createOBFormFieldMapping(
+		long obFormFieldMappingId);
 
 	/**
 	 * @throws PortalException
@@ -97,12 +106,17 @@ public interface OBFormFieldMappingLocalService
 	 * <strong>Important:</strong> Inspect OBFormFieldMappingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public OBFormFieldMapping deleteOBFormFieldMapping(long obFormFieldId)
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+			long obFormFieldMappingId)
+		throws PortalException;
+
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+			long obFormEntryId, String formFieldReference)
 		throws PortalException;
 
 	/**
@@ -193,7 +207,8 @@ public interface OBFormFieldMappingLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OBFormFieldMapping fetchOBFormFieldMapping(long obFormFieldId);
+	public OBFormFieldMapping fetchOBFormFieldMapping(
+		long obFormFieldMappingId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -204,12 +219,17 @@ public interface OBFormFieldMappingLocalService
 	/**
 	 * Returns the ob form field mapping with the primary key.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OBFormFieldMapping getOBFormFieldMapping(long obFormFieldId)
+	public OBFormFieldMapping getOBFormFieldMapping(long obFormFieldMappingId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OBFormFieldMapping getOBFormFieldMapping(
+			long obFormEntryId, String formFieldReference)
 		throws PortalException;
 
 	/**
@@ -226,6 +246,13 @@ public interface OBFormFieldMappingLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OBFormFieldMapping> getOBFormFieldMappings(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OBFormFieldMapping> getOBFormFieldMappings(long obFormEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OBFormFieldMapping> getOBFormFieldMappings(
+		long obFormEntryId, int start, int end);
+
 	/**
 	 * Returns the number of ob form field mappings.
 	 *
@@ -233,6 +260,9 @@ public interface OBFormFieldMappingLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOBFormFieldMappingsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOBFormFieldMappingsCount(long obFormEntryId);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -247,6 +277,11 @@ public interface OBFormFieldMappingLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public OBFormFieldMapping updateOBFormFieldMapping(
+			long obFormFieldMappingId, String formFieldReference,
+			String userPropertyName)
 		throws PortalException;
 
 	/**

@@ -33,14 +33,19 @@ public class OBFormEntryLocalServiceWrapper
 		_obFormEntryLocalService = obFormEntryLocalService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>OBFormEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OBFormEntryLocalServiceUtil</code>.
+	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormEntry addOBFormEntry(
-			long userId, String name,
+			long userId, String name, long formId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormEntryLocalService.addOBFormEntry(
-			userId, name, serviceContext);
+			userId, name, formId, serviceContext);
 	}
 
 	/**
@@ -93,14 +98,12 @@ public class OBFormEntryLocalServiceWrapper
 	 *
 	 * @param obFormEntryId the primary key of the ob form entry
 	 * @return the ob form entry that was removed
-	 * @throws NoSuchEntryException
 	 * @throws PortalException if a ob form entry with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormEntry deleteOBFormEntry(
 			long obFormEntryId)
-		throws com.liferay.form.onboarding.exception.NoSuchEntryException,
-			   com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormEntryLocalService.deleteOBFormEntry(obFormEntryId);
 	}
@@ -228,6 +231,13 @@ public class OBFormEntryLocalServiceWrapper
 		long obFormEntryId) {
 
 		return _obFormEntryLocalService.fetchOBFormEntry(obFormEntryId);
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormEntry
+		fetchOBFormEntryByFormId(long formId) {
+
+		return _obFormEntryLocalService.fetchOBFormEntryByFormId(formId);
 	}
 
 	/**
@@ -379,6 +389,14 @@ public class OBFormEntryLocalServiceWrapper
 		return _obFormEntryLocalService.getOBFormEntry(obFormEntryId);
 	}
 
+	@Override
+	public com.liferay.form.onboarding.model.OBFormEntry getOBFormEntryByFormId(
+			long formId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormEntryLocalService.getOBFormEntryByFormId(formId);
+	}
+
 	/**
 	 * Returns the ob form entry matching the UUID and group.
 	 *
@@ -419,12 +437,15 @@ public class OBFormEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.form.onboarding.model.OBFormEntry updateOBFormEntry(
-			long userId, long formOBEntryId, String name,
+			long userId, long obFormEntryId, String name,
+			long[] organizationIds, long[] roleIds, long[] siteIds,
+			long[] userGroupIds, boolean sendEmail, boolean active,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormEntryLocalService.updateOBFormEntry(
-			userId, formOBEntryId, name, serviceContext);
+			userId, obFormEntryId, name, organizationIds, roleIds, siteIds,
+			userGroupIds, sendEmail, active, serviceContext);
 	}
 
 	/**

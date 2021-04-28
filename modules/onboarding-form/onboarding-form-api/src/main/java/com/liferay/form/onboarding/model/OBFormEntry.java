@@ -58,4 +58,20 @@ public interface OBFormEntry extends OBFormEntryModel, PersistedModel {
 
 		};
 
+	public long[] getOrganizationIdsAsLongs();
+
+	public long[] getRoleIdsAsLongs();
+
+	public long[] getSiteIdsAsLongs();
+
+	public long[] getUserGroupIdsAsLongs();
+
+	public void setOrganizationIds(long[] organizationIds);
+
+	public void setRoldIds(long[] roleIds);
+
+	public void setSiteIds(long[] siteIds);
+
+	public void setUserGroupIds(long[] userGroupIds);
+
 }

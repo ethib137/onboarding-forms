@@ -9,14 +9,17 @@ create table OBForm_OBFormEntry (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	formId LONG,
+	organizationIds VARCHAR(75) null,
 	roleIds VARCHAR(75) null,
 	siteIds VARCHAR(75) null,
+	userGroupIds VARCHAR(75) null,
+	sendEmail BOOLEAN,
 	active_ BOOLEAN
 );
 
 create table OBForm_OBFormFieldMapping (
-	obFormFieldId LONG not null primary key,
+	obFormFieldMappingId LONG not null primary key,
 	userPropertyName VARCHAR(75) null,
-	formFieldId LONG,
+	formFieldReference VARCHAR(75) null,
 	obFormEntryId LONG
 );

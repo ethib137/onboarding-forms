@@ -80,8 +80,9 @@ public class OBFormEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"formId", Types.BIGINT},
-		{"roleIds", Types.VARCHAR}, {"siteIds", Types.VARCHAR},
-		{"active_", Types.BOOLEAN}
+		{"organizationIds", Types.VARCHAR}, {"roleIds", Types.VARCHAR},
+		{"siteIds", Types.VARCHAR}, {"userGroupIds", Types.VARCHAR},
+		{"sendEmail", Types.BOOLEAN}, {"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,13 +99,16 @@ public class OBFormEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("formId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("organizationIds", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roleIds", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("siteIds", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userGroupIds", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("sendEmail", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OBForm_OBFormEntry (uuid_ VARCHAR(75) null,obFormEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,formId LONG,roleIds VARCHAR(75) null,siteIds VARCHAR(75) null,active_ BOOLEAN)";
+		"create table OBForm_OBFormEntry (uuid_ VARCHAR(75) null,obFormEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,formId LONG,organizationIds VARCHAR(75) null,roleIds VARCHAR(75) null,siteIds VARCHAR(75) null,userGroupIds VARCHAR(75) null,sendEmail BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table OBForm_OBFormEntry";
 
@@ -130,26 +134,32 @@ public class OBFormEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long FORMID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -190,8 +200,11 @@ public class OBFormEntryModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setFormId(soapModel.getFormId());
+		model.setOrganizationIds(soapModel.getOrganizationIds());
 		model.setRoleIds(soapModel.getRoleIds());
 		model.setSiteIds(soapModel.getSiteIds());
+		model.setUserGroupIds(soapModel.getUserGroupIds());
+		model.setSendEmail(soapModel.isSendEmail());
 		model.setActive(soapModel.isActive());
 
 		return model;
@@ -381,6 +394,11 @@ public class OBFormEntryModelImpl
 		attributeGetterFunctions.put("formId", OBFormEntry::getFormId);
 		attributeSetterBiConsumers.put(
 			"formId", (BiConsumer<OBFormEntry, Long>)OBFormEntry::setFormId);
+		attributeGetterFunctions.put(
+			"organizationIds", OBFormEntry::getOrganizationIds);
+		attributeSetterBiConsumers.put(
+			"organizationIds",
+			(BiConsumer<OBFormEntry, String>)OBFormEntry::setOrganizationIds);
 		attributeGetterFunctions.put("roleIds", OBFormEntry::getRoleIds);
 		attributeSetterBiConsumers.put(
 			"roleIds",
@@ -389,6 +407,15 @@ public class OBFormEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"siteIds",
 			(BiConsumer<OBFormEntry, String>)OBFormEntry::setSiteIds);
+		attributeGetterFunctions.put(
+			"userGroupIds", OBFormEntry::getUserGroupIds);
+		attributeSetterBiConsumers.put(
+			"userGroupIds",
+			(BiConsumer<OBFormEntry, String>)OBFormEntry::setUserGroupIds);
+		attributeGetterFunctions.put("sendEmail", OBFormEntry::getSendEmail);
+		attributeSetterBiConsumers.put(
+			"sendEmail",
+			(BiConsumer<OBFormEntry, Boolean>)OBFormEntry::setSendEmail);
 		attributeGetterFunctions.put("active", OBFormEntry::getActive);
 		attributeSetterBiConsumers.put(
 			"active", (BiConsumer<OBFormEntry, Boolean>)OBFormEntry::setActive);
@@ -623,6 +650,35 @@ public class OBFormEntryModelImpl
 		_formId = formId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalFormId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("formId"));
+	}
+
+	@JSON
+	@Override
+	public String getOrganizationIds() {
+		if (_organizationIds == null) {
+			return "";
+		}
+		else {
+			return _organizationIds;
+		}
+	}
+
+	@Override
+	public void setOrganizationIds(String organizationIds) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_organizationIds = organizationIds;
+	}
+
 	@JSON
 	@Override
 	public String getRoleIds() {
@@ -661,6 +717,47 @@ public class OBFormEntryModelImpl
 		}
 
 		_siteIds = siteIds;
+	}
+
+	@JSON
+	@Override
+	public String getUserGroupIds() {
+		if (_userGroupIds == null) {
+			return "";
+		}
+		else {
+			return _userGroupIds;
+		}
+	}
+
+	@Override
+	public void setUserGroupIds(String userGroupIds) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_userGroupIds = userGroupIds;
+	}
+
+	@JSON
+	@Override
+	public boolean getSendEmail() {
+		return _sendEmail;
+	}
+
+	@JSON
+	@Override
+	public boolean isSendEmail() {
+		return _sendEmail;
+	}
+
+	@Override
+	public void setSendEmail(boolean sendEmail) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_sendEmail = sendEmail;
 	}
 
 	@JSON
@@ -754,8 +851,11 @@ public class OBFormEntryModelImpl
 		obFormEntryImpl.setModifiedDate(getModifiedDate());
 		obFormEntryImpl.setName(getName());
 		obFormEntryImpl.setFormId(getFormId());
+		obFormEntryImpl.setOrganizationIds(getOrganizationIds());
 		obFormEntryImpl.setRoleIds(getRoleIds());
 		obFormEntryImpl.setSiteIds(getSiteIds());
+		obFormEntryImpl.setUserGroupIds(getUserGroupIds());
+		obFormEntryImpl.setSendEmail(isSendEmail());
 		obFormEntryImpl.setActive(isActive());
 
 		obFormEntryImpl.resetOriginalValues();
@@ -890,6 +990,14 @@ public class OBFormEntryModelImpl
 
 		obFormEntryCacheModel.formId = getFormId();
 
+		obFormEntryCacheModel.organizationIds = getOrganizationIds();
+
+		String organizationIds = obFormEntryCacheModel.organizationIds;
+
+		if ((organizationIds != null) && (organizationIds.length() == 0)) {
+			obFormEntryCacheModel.organizationIds = null;
+		}
+
 		obFormEntryCacheModel.roleIds = getRoleIds();
 
 		String roleIds = obFormEntryCacheModel.roleIds;
@@ -905,6 +1013,16 @@ public class OBFormEntryModelImpl
 		if ((siteIds != null) && (siteIds.length() == 0)) {
 			obFormEntryCacheModel.siteIds = null;
 		}
+
+		obFormEntryCacheModel.userGroupIds = getUserGroupIds();
+
+		String userGroupIds = obFormEntryCacheModel.userGroupIds;
+
+		if ((userGroupIds != null) && (userGroupIds.length() == 0)) {
+			obFormEntryCacheModel.userGroupIds = null;
+		}
+
+		obFormEntryCacheModel.sendEmail = isSendEmail();
 
 		obFormEntryCacheModel.active = isActive();
 
@@ -992,8 +1110,11 @@ public class OBFormEntryModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private long _formId;
+	private String _organizationIds;
 	private String _roleIds;
 	private String _siteIds;
+	private String _userGroupIds;
+	private boolean _sendEmail;
 	private boolean _active;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1035,8 +1156,11 @@ public class OBFormEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("formId", _formId);
+		_columnOriginalValues.put("organizationIds", _organizationIds);
 		_columnOriginalValues.put("roleIds", _roleIds);
 		_columnOriginalValues.put("siteIds", _siteIds);
+		_columnOriginalValues.put("userGroupIds", _userGroupIds);
+		_columnOriginalValues.put("sendEmail", _sendEmail);
 		_columnOriginalValues.put("active_", _active);
 	}
 
@@ -1082,11 +1206,17 @@ public class OBFormEntryModelImpl
 
 		columnBitmasks.put("formId", 512L);
 
-		columnBitmasks.put("roleIds", 1024L);
+		columnBitmasks.put("organizationIds", 1024L);
 
-		columnBitmasks.put("siteIds", 2048L);
+		columnBitmasks.put("roleIds", 2048L);
 
-		columnBitmasks.put("active_", 4096L);
+		columnBitmasks.put("siteIds", 4096L);
+
+		columnBitmasks.put("userGroupIds", 8192L);
+
+		columnBitmasks.put("sendEmail", 16384L);
+
+		columnBitmasks.put("active_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

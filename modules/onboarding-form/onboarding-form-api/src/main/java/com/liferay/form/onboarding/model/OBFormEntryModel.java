@@ -234,6 +234,21 @@ public interface OBFormEntryModel
 	public void setFormId(long formId);
 
 	/**
+	 * Returns the organization IDs of this ob form entry.
+	 *
+	 * @return the organization IDs of this ob form entry
+	 */
+	@AutoEscape
+	public String getOrganizationIds();
+
+	/**
+	 * Sets the organization IDs of this ob form entry.
+	 *
+	 * @param organizationIds the organization IDs of this ob form entry
+	 */
+	public void setOrganizationIds(String organizationIds);
+
+	/**
 	 * Returns the role IDs of this ob form entry.
 	 *
 	 * @return the role IDs of this ob form entry
@@ -262,6 +277,42 @@ public interface OBFormEntryModel
 	 * @param siteIds the site IDs of this ob form entry
 	 */
 	public void setSiteIds(String siteIds);
+
+	/**
+	 * Returns the user group IDs of this ob form entry.
+	 *
+	 * @return the user group IDs of this ob form entry
+	 */
+	@AutoEscape
+	public String getUserGroupIds();
+
+	/**
+	 * Sets the user group IDs of this ob form entry.
+	 *
+	 * @param userGroupIds the user group IDs of this ob form entry
+	 */
+	public void setUserGroupIds(String userGroupIds);
+
+	/**
+	 * Returns the send email of this ob form entry.
+	 *
+	 * @return the send email of this ob form entry
+	 */
+	public boolean getSendEmail();
+
+	/**
+	 * Returns <code>true</code> if this ob form entry is send email.
+	 *
+	 * @return <code>true</code> if this ob form entry is send email; <code>false</code> otherwise
+	 */
+	public boolean isSendEmail();
+
+	/**
+	 * Sets whether this ob form entry is send email.
+	 *
+	 * @param sendEmail the send email of this ob form entry
+	 */
+	public void setSendEmail(boolean sendEmail);
 
 	/**
 	 * Returns the active of this ob form entry.

@@ -54,18 +54,18 @@ public interface OBFormFieldMappingModel extends BaseModel<OBFormFieldMapping> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the ob form field ID of this ob form field mapping.
+	 * Returns the ob form field mapping ID of this ob form field mapping.
 	 *
-	 * @return the ob form field ID of this ob form field mapping
+	 * @return the ob form field mapping ID of this ob form field mapping
 	 */
-	public long getObFormFieldId();
+	public long getObFormFieldMappingId();
 
 	/**
-	 * Sets the ob form field ID of this ob form field mapping.
+	 * Sets the ob form field mapping ID of this ob form field mapping.
 	 *
-	 * @param obFormFieldId the ob form field ID of this ob form field mapping
+	 * @param obFormFieldMappingId the ob form field mapping ID of this ob form field mapping
 	 */
-	public void setObFormFieldId(long obFormFieldId);
+	public void setObFormFieldMappingId(long obFormFieldMappingId);
 
 	/**
 	 * Returns the user property name of this ob form field mapping.
@@ -83,18 +83,19 @@ public interface OBFormFieldMappingModel extends BaseModel<OBFormFieldMapping> {
 	public void setUserPropertyName(String userPropertyName);
 
 	/**
-	 * Returns the form field ID of this ob form field mapping.
+	 * Returns the form field reference of this ob form field mapping.
 	 *
-	 * @return the form field ID of this ob form field mapping
+	 * @return the form field reference of this ob form field mapping
 	 */
-	public long getFormFieldId();
+	@AutoEscape
+	public String getFormFieldReference();
 
 	/**
-	 * Sets the form field ID of this ob form field mapping.
+	 * Sets the form field reference of this ob form field mapping.
 	 *
-	 * @param formFieldId the form field ID of this ob form field mapping
+	 * @param formFieldReference the form field reference of this ob form field mapping
 	 */
-	public void setFormFieldId(long formFieldId);
+	public void setFormFieldReference(String formFieldReference);
 
 	/**
 	 * Returns the ob form entry ID of this ob form field mapping.

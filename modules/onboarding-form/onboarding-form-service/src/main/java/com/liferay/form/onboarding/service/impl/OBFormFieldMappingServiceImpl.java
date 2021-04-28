@@ -42,9 +42,10 @@ import org.osgi.service.component.annotations.Component;
 public class OBFormFieldMappingServiceImpl
 	extends OBFormFieldMappingServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.form.onboarding.service.OBFormFieldMappingServiceUtil</code> to access the ob form field mapping remote service.
 	 */
+
 }

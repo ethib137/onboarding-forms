@@ -15,7 +15,6 @@
 package com.liferay.form.onboarding.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.form.onboarding.exception.NoSuchEntryException;
 import com.liferay.form.onboarding.model.OBFormEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -64,8 +63,15 @@ public interface OBFormEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.form.onboarding.service.impl.OBFormEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ob form entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OBFormEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>OBFormEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OBFormEntryLocalServiceUtil</code>.
+	 */
 	public OBFormEntry addOBFormEntry(
-			long userId, String name, ServiceContext serviceContext)
+			long userId, String name, long formId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -105,12 +111,11 @@ public interface OBFormEntryLocalService
 	 *
 	 * @param obFormEntryId the primary key of the ob form entry
 	 * @return the ob form entry that was removed
-	 * @throws NoSuchEntryException
 	 * @throws PortalException if a ob form entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public OBFormEntry deleteOBFormEntry(long obFormEntryId)
-		throws NoSuchEntryException, PortalException;
+		throws PortalException;
 
 	/**
 	 * Deletes the ob form entry from the database. Also notifies the appropriate model listeners.
@@ -200,6 +205,9 @@ public interface OBFormEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OBFormEntry fetchOBFormEntry(long obFormEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OBFormEntry fetchOBFormEntryByFormId(long formId);
 
 	/**
 	 * Returns the ob form entry matching the UUID and group.
@@ -294,6 +302,10 @@ public interface OBFormEntryLocalService
 	public OBFormEntry getOBFormEntry(long obFormEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OBFormEntry getOBFormEntryByFormId(long formId)
+		throws PortalException;
+
 	/**
 	 * Returns the ob form entry matching the UUID and group.
 	 *
@@ -322,7 +334,9 @@ public interface OBFormEntryLocalService
 		throws PortalException;
 
 	public OBFormEntry updateOBFormEntry(
-			long userId, long formOBEntryId, String name,
+			long userId, long obFormEntryId, String name,
+			long[] organizationIds, long[] roleIds, long[] siteIds,
+			long[] userGroupIds, boolean sendEmail, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException;
 

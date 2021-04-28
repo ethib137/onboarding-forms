@@ -701,66 +701,124 @@ public class OBFormEntryUtil {
 	}
 
 	/**
-	 * Returns all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns the ob form entry where formId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
-	 * @param name the name
-	 * @param groupId the group ID
-	 * @return the matching ob form entries
+	 * @param formId the form ID
+	 * @return the matching ob form entry
+	 * @throws NoSuchEntryException if a matching ob form entry could not be found
 	 */
-	public static List<OBFormEntry> findByn_g(String name, long groupId) {
-		return getPersistence().findByn_g(name, groupId);
+	public static OBFormEntry findByformId(long formId)
+		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
+
+		return getPersistence().findByformId(formId);
 	}
 
 	/**
-	 * Returns a range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns the ob form entry where formId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formId the form ID
+	 * @return the matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
+	 */
+	public static OBFormEntry fetchByformId(long formId) {
+		return getPersistence().fetchByformId(formId);
+	}
+
+	/**
+	 * Returns the ob form entry where formId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param formId the form ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
+	 */
+	public static OBFormEntry fetchByformId(
+		long formId, boolean useFinderCache) {
+
+		return getPersistence().fetchByformId(formId, useFinderCache);
+	}
+
+	/**
+	 * Removes the ob form entry where formId = &#63; from the database.
+	 *
+	 * @param formId the form ID
+	 * @return the ob form entry that was removed
+	 */
+	public static OBFormEntry removeByformId(long formId)
+		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
+
+		return getPersistence().removeByformId(formId);
+	}
+
+	/**
+	 * Returns the number of ob form entries where formId = &#63;.
+	 *
+	 * @param formId the form ID
+	 * @return the number of matching ob form entries
+	 */
+	public static int countByformId(long formId) {
+		return getPersistence().countByformId(formId);
+	}
+
+	/**
+	 * Returns all the ob form entries where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching ob form entries
+	 */
+	public static List<OBFormEntry> findByn_g(long groupId, String name) {
+		return getPersistence().findByn_g(groupId, name);
+	}
+
+	/**
+	 * Returns a range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @return the range of matching ob form entries
 	 */
 	public static List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end) {
+		long groupId, String name, int start, int end) {
 
-		return getPersistence().findByn_g(name, groupId, start, end);
+		return getPersistence().findByn_g(groupId, name, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching ob form entries
 	 */
 	public static List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
 		return getPersistence().findByn_g(
-			name, groupId, start, end, orderByComparator);
+			groupId, name, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -768,120 +826,120 @@ public class OBFormEntryUtil {
 	 * @return the ordered range of matching ob form entries
 	 */
 	public static List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<OBFormEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findByn_g(
-			name, groupId, start, end, orderByComparator, useFinderCache);
+			groupId, name, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the first ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ob form entry
 	 * @throws NoSuchEntryException if a matching ob form entry could not be found
 	 */
 	public static OBFormEntry findByn_g_First(
-			String name, long groupId,
+			long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
 
 		return getPersistence().findByn_g_First(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 	}
 
 	/**
-	 * Returns the first ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the first ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
 	 */
 	public static OBFormEntry fetchByn_g_First(
-		String name, long groupId,
+		long groupId, String name,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
 		return getPersistence().fetchByn_g_First(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 	}
 
 	/**
-	 * Returns the last ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the last ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ob form entry
 	 * @throws NoSuchEntryException if a matching ob form entry could not be found
 	 */
 	public static OBFormEntry findByn_g_Last(
-			String name, long groupId,
+			long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
 
 		return getPersistence().findByn_g_Last(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 	}
 
 	/**
-	 * Returns the last ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the last ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
 	 */
 	public static OBFormEntry fetchByn_g_Last(
-		String name, long groupId,
+		long groupId, String name,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
 		return getPersistence().fetchByn_g_Last(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 	}
 
 	/**
-	 * Returns the ob form entries before and after the current ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the ob form entries before and after the current ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
 	 * @param obFormEntryId the primary key of the current ob form entry
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ob form entry
 	 * @throws NoSuchEntryException if a ob form entry with the primary key could not be found
 	 */
 	public static OBFormEntry[] findByn_g_PrevAndNext(
-			long obFormEntryId, String name, long groupId,
+			long obFormEntryId, long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
 
 		return getPersistence().findByn_g_PrevAndNext(
-			obFormEntryId, name, groupId, orderByComparator);
+			obFormEntryId, groupId, name, orderByComparator);
 	}
 
 	/**
-	 * Removes all the ob form entries where name = &#63; and groupId = &#63; from the database.
+	 * Removes all the ob form entries where groupId = &#63; and name = &#63; from the database.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 */
-	public static void removeByn_g(String name, long groupId) {
-		getPersistence().removeByn_g(name, groupId);
+	public static void removeByn_g(long groupId, String name) {
+		getPersistence().removeByn_g(groupId, name);
 	}
 
 	/**
-	 * Returns the number of ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns the number of ob form entries where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @return the number of matching ob form entries
 	 */
-	public static int countByn_g(String name, long groupId) {
-		return getPersistence().countByn_g(name, groupId);
+	public static int countByn_g(long groupId, String name) {
+		return getPersistence().countByn_g(groupId, name);
 	}
 
 	/**

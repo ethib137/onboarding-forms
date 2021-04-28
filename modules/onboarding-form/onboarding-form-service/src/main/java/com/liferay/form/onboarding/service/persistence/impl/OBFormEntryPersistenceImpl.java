@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -49,6 +50,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1946,52 +1948,259 @@ public class OBFormEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"obFormEntry.groupId = ?";
 
+	private FinderPath _finderPathFetchByformId;
+	private FinderPath _finderPathCountByformId;
+
+	/**
+	 * Returns the ob form entry where formId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param formId the form ID
+	 * @return the matching ob form entry
+	 * @throws NoSuchEntryException if a matching ob form entry could not be found
+	 */
+	@Override
+	public OBFormEntry findByformId(long formId) throws NoSuchEntryException {
+		OBFormEntry obFormEntry = fetchByformId(formId);
+
+		if (obFormEntry == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("formId=");
+			sb.append(formId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return obFormEntry;
+	}
+
+	/**
+	 * Returns the ob form entry where formId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formId the form ID
+	 * @return the matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
+	 */
+	@Override
+	public OBFormEntry fetchByformId(long formId) {
+		return fetchByformId(formId, true);
+	}
+
+	/**
+	 * Returns the ob form entry where formId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param formId the form ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
+	 */
+	@Override
+	public OBFormEntry fetchByformId(long formId, boolean useFinderCache) {
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {formId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByformId, finderArgs, this);
+		}
+
+		if (result instanceof OBFormEntry) {
+			OBFormEntry obFormEntry = (OBFormEntry)result;
+
+			if (formId != obFormEntry.getFormId()) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_SELECT_OBFORMENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_FORMID_FORMID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(formId);
+
+				List<OBFormEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByformId, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {formId};
+							}
+
+							_log.warn(
+								"OBFormEntryPersistenceImpl.fetchByformId(long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					OBFormEntry obFormEntry = list.get(0);
+
+					result = obFormEntry;
+
+					cacheResult(obFormEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OBFormEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the ob form entry where formId = &#63; from the database.
+	 *
+	 * @param formId the form ID
+	 * @return the ob form entry that was removed
+	 */
+	@Override
+	public OBFormEntry removeByformId(long formId) throws NoSuchEntryException {
+		OBFormEntry obFormEntry = findByformId(formId);
+
+		return remove(obFormEntry);
+	}
+
+	/**
+	 * Returns the number of ob form entries where formId = &#63;.
+	 *
+	 * @param formId the form ID
+	 * @return the number of matching ob form entries
+	 */
+	@Override
+	public int countByformId(long formId) {
+		FinderPath finderPath = _finderPathCountByformId;
+
+		Object[] finderArgs = new Object[] {formId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OBFORMENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_FORMID_FORMID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(formId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_FORMID_FORMID_2 =
+		"obFormEntry.formId = ?";
+
 	private FinderPath _finderPathWithPaginationFindByn_g;
 	private FinderPath _finderPathWithoutPaginationFindByn_g;
 	private FinderPath _finderPathCountByn_g;
 
 	/**
-	 * Returns all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @return the matching ob form entries
 	 */
 	@Override
-	public List<OBFormEntry> findByn_g(String name, long groupId) {
+	public List<OBFormEntry> findByn_g(long groupId, String name) {
 		return findByn_g(
-			name, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns a range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @return the range of matching ob form entries
 	 */
 	@Override
 	public List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end) {
+		long groupId, String name, int start, int end) {
 
-		return findByn_g(name, groupId, start, end, null);
+		return findByn_g(groupId, name, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1999,21 +2208,21 @@ public class OBFormEntryPersistenceImpl
 	 */
 	@Override
 	public List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
-		return findByn_g(name, groupId, start, end, orderByComparator, true);
+		return findByn_g(groupId, name, start, end, orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns an ordered range of all the ob form entries where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param start the lower bound of the range of ob form entries
 	 * @param end the upper bound of the range of ob form entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2022,7 +2231,7 @@ public class OBFormEntryPersistenceImpl
 	 */
 	@Override
 	public List<OBFormEntry> findByn_g(
-		String name, long groupId, int start, int end,
+		long groupId, String name, int start, int end,
 		OrderByComparator<OBFormEntry> orderByComparator,
 		boolean useFinderCache) {
 
@@ -2036,13 +2245,13 @@ public class OBFormEntryPersistenceImpl
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByn_g;
-				finderArgs = new Object[] {name, groupId};
+				finderArgs = new Object[] {groupId, name};
 			}
 		}
 		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByn_g;
 			finderArgs = new Object[] {
-				name, groupId, start, end, orderByComparator
+				groupId, name, start, end, orderByComparator
 			};
 		}
 
@@ -2054,8 +2263,8 @@ public class OBFormEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OBFormEntry obFormEntry : list) {
-					if (!name.equals(obFormEntry.getName()) ||
-						(groupId != obFormEntry.getGroupId())) {
+					if ((groupId != obFormEntry.getGroupId()) ||
+						!name.equals(obFormEntry.getName())) {
 
 						list = null;
 
@@ -2078,6 +2287,8 @@ public class OBFormEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBFORMENTRY_WHERE);
 
+			sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
+
 			boolean bindName = false;
 
 			if (name.isEmpty()) {
@@ -2088,8 +2299,6 @@ public class OBFormEntryPersistenceImpl
 
 				sb.append(_FINDER_COLUMN_N_G_NAME_2);
 			}
-
-			sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -2110,11 +2319,11 @@ public class OBFormEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(groupId);
+
 				if (bindName) {
 					queryPos.add(name);
 				}
-
-				queryPos.add(groupId);
 
 				list = (List<OBFormEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
@@ -2137,22 +2346,22 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the first ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ob form entry
 	 * @throws NoSuchEntryException if a matching ob form entry could not be found
 	 */
 	@Override
 	public OBFormEntry findByn_g_First(
-			String name, long groupId,
+			long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws NoSuchEntryException {
 
 		OBFormEntry obFormEntry = fetchByn_g_First(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 
 		if (obFormEntry != null) {
 			return obFormEntry;
@@ -2162,11 +2371,11 @@ public class OBFormEntryPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append(", groupId=");
+		sb.append("groupId=");
 		sb.append(groupId);
+
+		sb.append(", name=");
+		sb.append(name);
 
 		sb.append("}");
 
@@ -2174,20 +2383,20 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the first ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the first ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
 	 */
 	@Override
 	public OBFormEntry fetchByn_g_First(
-		String name, long groupId,
+		long groupId, String name,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
 		List<OBFormEntry> list = findByn_g(
-			name, groupId, 0, 1, orderByComparator);
+			groupId, name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2197,22 +2406,22 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the last ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ob form entry
 	 * @throws NoSuchEntryException if a matching ob form entry could not be found
 	 */
 	@Override
 	public OBFormEntry findByn_g_Last(
-			String name, long groupId,
+			long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws NoSuchEntryException {
 
 		OBFormEntry obFormEntry = fetchByn_g_Last(
-			name, groupId, orderByComparator);
+			groupId, name, orderByComparator);
 
 		if (obFormEntry != null) {
 			return obFormEntry;
@@ -2222,11 +2431,11 @@ public class OBFormEntryPersistenceImpl
 
 		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append(", groupId=");
+		sb.append("groupId=");
 		sb.append(groupId);
+
+		sb.append(", name=");
+		sb.append(name);
 
 		sb.append("}");
 
@@ -2234,26 +2443,26 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the last ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the last ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ob form entry, or <code>null</code> if a matching ob form entry could not be found
 	 */
 	@Override
 	public OBFormEntry fetchByn_g_Last(
-		String name, long groupId,
+		long groupId, String name,
 		OrderByComparator<OBFormEntry> orderByComparator) {
 
-		int count = countByn_g(name, groupId);
+		int count = countByn_g(groupId, name);
 
 		if (count == 0) {
 			return null;
 		}
 
 		List<OBFormEntry> list = findByn_g(
-			name, groupId, count - 1, count, orderByComparator);
+			groupId, name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2263,18 +2472,18 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the ob form entries before and after the current ob form entry in the ordered set where name = &#63; and groupId = &#63;.
+	 * Returns the ob form entries before and after the current ob form entry in the ordered set where groupId = &#63; and name = &#63;.
 	 *
 	 * @param obFormEntryId the primary key of the current ob form entry
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ob form entry
 	 * @throws NoSuchEntryException if a ob form entry with the primary key could not be found
 	 */
 	@Override
 	public OBFormEntry[] findByn_g_PrevAndNext(
-			long obFormEntryId, String name, long groupId,
+			long obFormEntryId, long groupId, String name,
 			OrderByComparator<OBFormEntry> orderByComparator)
 		throws NoSuchEntryException {
 
@@ -2290,12 +2499,12 @@ public class OBFormEntryPersistenceImpl
 			OBFormEntry[] array = new OBFormEntryImpl[3];
 
 			array[0] = getByn_g_PrevAndNext(
-				session, obFormEntry, name, groupId, orderByComparator, true);
+				session, obFormEntry, groupId, name, orderByComparator, true);
 
 			array[1] = obFormEntry;
 
 			array[2] = getByn_g_PrevAndNext(
-				session, obFormEntry, name, groupId, orderByComparator, false);
+				session, obFormEntry, groupId, name, orderByComparator, false);
 
 			return array;
 		}
@@ -2308,7 +2517,7 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	protected OBFormEntry getByn_g_PrevAndNext(
-		Session session, OBFormEntry obFormEntry, String name, long groupId,
+		Session session, OBFormEntry obFormEntry, long groupId, String name,
 		OrderByComparator<OBFormEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -2324,6 +2533,8 @@ public class OBFormEntryPersistenceImpl
 
 		sb.append(_SQL_SELECT_OBFORMENTRY_WHERE);
 
+		sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
+
 		boolean bindName = false;
 
 		if (name.isEmpty()) {
@@ -2334,8 +2545,6 @@ public class OBFormEntryPersistenceImpl
 
 			sb.append(_FINDER_COLUMN_N_G_NAME_2);
 		}
-
-		sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -2406,11 +2615,11 @@ public class OBFormEntryPersistenceImpl
 
 		QueryPos queryPos = QueryPos.getInstance(query);
 
+		queryPos.add(groupId);
+
 		if (bindName) {
 			queryPos.add(name);
 		}
-
-		queryPos.add(groupId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -2431,16 +2640,16 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes all the ob form entries where name = &#63; and groupId = &#63; from the database.
+	 * Removes all the ob form entries where groupId = &#63; and name = &#63; from the database.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 */
 	@Override
-	public void removeByn_g(String name, long groupId) {
+	public void removeByn_g(long groupId, String name) {
 		for (OBFormEntry obFormEntry :
 				findByn_g(
-					name, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
 			remove(obFormEntry);
@@ -2448,19 +2657,19 @@ public class OBFormEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of ob form entries where name = &#63; and groupId = &#63;.
+	 * Returns the number of ob form entries where groupId = &#63; and name = &#63;.
 	 *
-	 * @param name the name
 	 * @param groupId the group ID
+	 * @param name the name
 	 * @return the number of matching ob form entries
 	 */
 	@Override
-	public int countByn_g(String name, long groupId) {
+	public int countByn_g(long groupId, String name) {
 		name = Objects.toString(name, "");
 
 		FinderPath finderPath = _finderPathCountByn_g;
 
-		Object[] finderArgs = new Object[] {name, groupId};
+		Object[] finderArgs = new Object[] {groupId, name};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2468,6 +2677,8 @@ public class OBFormEntryPersistenceImpl
 			StringBundler sb = new StringBundler(3);
 
 			sb.append(_SQL_COUNT_OBFORMENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
 
 			boolean bindName = false;
 
@@ -2480,8 +2691,6 @@ public class OBFormEntryPersistenceImpl
 				sb.append(_FINDER_COLUMN_N_G_NAME_2);
 			}
 
-			sb.append(_FINDER_COLUMN_N_G_GROUPID_2);
-
 			String sql = sb.toString();
 
 			Session session = null;
@@ -2493,11 +2702,11 @@ public class OBFormEntryPersistenceImpl
 
 				QueryPos queryPos = QueryPos.getInstance(query);
 
+				queryPos.add(groupId);
+
 				if (bindName) {
 					queryPos.add(name);
 				}
-
-				queryPos.add(groupId);
 
 				count = (Long)query.uniqueResult();
 
@@ -2514,14 +2723,14 @@ public class OBFormEntryPersistenceImpl
 		return count.intValue();
 	}
 
+	private static final String _FINDER_COLUMN_N_G_GROUPID_2 =
+		"obFormEntry.groupId = ? AND ";
+
 	private static final String _FINDER_COLUMN_N_G_NAME_2 =
-		"obFormEntry.name = ? AND ";
+		"obFormEntry.name = ?";
 
 	private static final String _FINDER_COLUMN_N_G_NAME_3 =
-		"(obFormEntry.name IS NULL OR obFormEntry.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_N_G_GROUPID_2 =
-		"obFormEntry.groupId = ?";
+		"(obFormEntry.name IS NULL OR obFormEntry.name = '')";
 
 	public OBFormEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2550,6 +2759,10 @@ public class OBFormEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
 			new Object[] {obFormEntry.getUuid(), obFormEntry.getGroupId()},
+			obFormEntry);
+
+		finderCache.putResult(
+			_finderPathFetchByformId, new Object[] {obFormEntry.getFormId()},
 			obFormEntry);
 	}
 
@@ -2627,6 +2840,13 @@ public class OBFormEntryPersistenceImpl
 			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args, obFormEntryModelImpl, false);
+
+		args = new Object[] {obFormEntryModelImpl.getFormId()};
+
+		finderCache.putResult(
+			_finderPathCountByformId, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByformId, args, obFormEntryModelImpl, false);
 	}
 
 	/**
@@ -3163,24 +3383,33 @@ public class OBFormEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_finderPathFetchByformId = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByformId",
+			new String[] {Long.class.getName()}, new String[] {"formId"}, true);
+
+		_finderPathCountByformId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByformId",
+			new String[] {Long.class.getName()}, new String[] {"formId"},
+			false);
+
 		_finderPathWithPaginationFindByn_g = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByn_g",
 			new String[] {
-				String.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
-			new String[] {"name", "groupId"}, true);
+			new String[] {"groupId", "name"}, true);
 
 		_finderPathWithoutPaginationFindByn_g = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByn_g",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"name", "groupId"}, true);
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "name"}, true);
 
 		_finderPathCountByn_g = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByn_g",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"name", "groupId"}, false);
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "name"}, false);
 	}
 
 	@Deactivate

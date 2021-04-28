@@ -38,14 +38,17 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -379,7 +382,7 @@ public class OBFormFieldMappingPersistenceImpl
 	/**
 	 * Returns the ob form field mappings before and after the current ob form field mapping in the ordered set where obFormEntryId = &#63;.
 	 *
-	 * @param obFormFieldId the primary key of the current ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the current ob form field mapping
 	 * @param obFormEntryId the ob form entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ob form field mapping
@@ -387,11 +390,12 @@ public class OBFormFieldMappingPersistenceImpl
 	 */
 	@Override
 	public OBFormFieldMapping[] findByobFormEntryId_PrevAndNext(
-			long obFormFieldId, long obFormEntryId,
+			long obFormFieldMappingId, long obFormEntryId,
 			OrderByComparator<OBFormFieldMapping> orderByComparator)
 		throws NoSuchFieldMappingException {
 
-		OBFormFieldMapping obFormFieldMapping = findByPrimaryKey(obFormFieldId);
+		OBFormFieldMapping obFormFieldMapping = findByPrimaryKey(
+			obFormFieldMappingId);
 
 		Session session = null;
 
@@ -599,6 +603,279 @@ public class OBFormFieldMappingPersistenceImpl
 	private static final String _FINDER_COLUMN_OBFORMENTRYID_OBFORMENTRYID_2 =
 		"obFormFieldMapping.obFormEntryId = ?";
 
+	private FinderPath _finderPathFetchByo_f;
+	private FinderPath _finderPathCountByo_f;
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping
+	 * @throws NoSuchFieldMappingException if a matching ob form field mapping could not be found
+	 */
+	@Override
+	public OBFormFieldMapping findByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws NoSuchFieldMappingException {
+
+		OBFormFieldMapping obFormFieldMapping = fetchByo_f(
+			formFieldReference, obFormEntryId);
+
+		if (obFormFieldMapping == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("formFieldReference=");
+			sb.append(formFieldReference);
+
+			sb.append(", obFormEntryId=");
+			sb.append(obFormEntryId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchFieldMappingException(sb.toString());
+		}
+
+		return obFormFieldMapping;
+	}
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	@Override
+	public OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId) {
+
+		return fetchByo_f(formFieldReference, obFormEntryId, true);
+	}
+
+	/**
+	 * Returns the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching ob form field mapping, or <code>null</code> if a matching ob form field mapping could not be found
+	 */
+	@Override
+	public OBFormFieldMapping fetchByo_f(
+		String formFieldReference, long obFormEntryId, boolean useFinderCache) {
+
+		formFieldReference = Objects.toString(formFieldReference, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {formFieldReference, obFormEntryId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByo_f, finderArgs, this);
+		}
+
+		if (result instanceof OBFormFieldMapping) {
+			OBFormFieldMapping obFormFieldMapping = (OBFormFieldMapping)result;
+
+			if (!Objects.equals(
+					formFieldReference,
+					obFormFieldMapping.getFormFieldReference()) ||
+				(obFormEntryId != obFormFieldMapping.getObFormEntryId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBFORMFIELDMAPPING_WHERE);
+
+			boolean bindFormFieldReference = false;
+
+			if (formFieldReference.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_F_FORMFIELDREFERENCE_3);
+			}
+			else {
+				bindFormFieldReference = true;
+
+				sb.append(_FINDER_COLUMN_O_F_FORMFIELDREFERENCE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_O_F_OBFORMENTRYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindFormFieldReference) {
+					queryPos.add(formFieldReference);
+				}
+
+				queryPos.add(obFormEntryId);
+
+				List<OBFormFieldMapping> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByo_f, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									formFieldReference, obFormEntryId
+								};
+							}
+
+							_log.warn(
+								"OBFormFieldMappingPersistenceImpl.fetchByo_f(String, long, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					OBFormFieldMapping obFormFieldMapping = list.get(0);
+
+					result = obFormFieldMapping;
+
+					cacheResult(obFormFieldMapping);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (OBFormFieldMapping)result;
+		}
+	}
+
+	/**
+	 * Removes the ob form field mapping where formFieldReference = &#63; and obFormEntryId = &#63; from the database.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the ob form field mapping that was removed
+	 */
+	@Override
+	public OBFormFieldMapping removeByo_f(
+			String formFieldReference, long obFormEntryId)
+		throws NoSuchFieldMappingException {
+
+		OBFormFieldMapping obFormFieldMapping = findByo_f(
+			formFieldReference, obFormEntryId);
+
+		return remove(obFormFieldMapping);
+	}
+
+	/**
+	 * Returns the number of ob form field mappings where formFieldReference = &#63; and obFormEntryId = &#63;.
+	 *
+	 * @param formFieldReference the form field reference
+	 * @param obFormEntryId the ob form entry ID
+	 * @return the number of matching ob form field mappings
+	 */
+	@Override
+	public int countByo_f(String formFieldReference, long obFormEntryId) {
+		formFieldReference = Objects.toString(formFieldReference, "");
+
+		FinderPath finderPath = _finderPathCountByo_f;
+
+		Object[] finderArgs = new Object[] {formFieldReference, obFormEntryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_OBFORMFIELDMAPPING_WHERE);
+
+			boolean bindFormFieldReference = false;
+
+			if (formFieldReference.isEmpty()) {
+				sb.append(_FINDER_COLUMN_O_F_FORMFIELDREFERENCE_3);
+			}
+			else {
+				bindFormFieldReference = true;
+
+				sb.append(_FINDER_COLUMN_O_F_FORMFIELDREFERENCE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_O_F_OBFORMENTRYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindFormFieldReference) {
+					queryPos.add(formFieldReference);
+				}
+
+				queryPos.add(obFormEntryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_O_F_FORMFIELDREFERENCE_2 =
+		"obFormFieldMapping.formFieldReference = ? AND ";
+
+	private static final String _FINDER_COLUMN_O_F_FORMFIELDREFERENCE_3 =
+		"(obFormFieldMapping.formFieldReference IS NULL OR obFormFieldMapping.formFieldReference = '') AND ";
+
+	private static final String _FINDER_COLUMN_O_F_OBFORMENTRYID_2 =
+		"obFormFieldMapping.obFormEntryId = ?";
+
 	public OBFormFieldMappingPersistenceImpl() {
 		setModelClass(OBFormFieldMapping.class);
 
@@ -615,6 +892,14 @@ public class OBFormFieldMappingPersistenceImpl
 	public void cacheResult(OBFormFieldMapping obFormFieldMapping) {
 		entityCache.putResult(
 			OBFormFieldMappingImpl.class, obFormFieldMapping.getPrimaryKey(),
+			obFormFieldMapping);
+
+		finderCache.putResult(
+			_finderPathFetchByo_f,
+			new Object[] {
+				obFormFieldMapping.getFormFieldReference(),
+				obFormFieldMapping.getObFormEntryId()
+			},
 			obFormFieldMapping);
 	}
 
@@ -683,18 +968,32 @@ public class OBFormFieldMappingPersistenceImpl
 		}
 	}
 
+	protected void cacheUniqueFindersCache(
+		OBFormFieldMappingModelImpl obFormFieldMappingModelImpl) {
+
+		Object[] args = new Object[] {
+			obFormFieldMappingModelImpl.getFormFieldReference(),
+			obFormFieldMappingModelImpl.getObFormEntryId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByo_f, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByo_f, args, obFormFieldMappingModelImpl, false);
+	}
+
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
 	@Override
-	public OBFormFieldMapping create(long obFormFieldId) {
+	public OBFormFieldMapping create(long obFormFieldMappingId) {
 		OBFormFieldMapping obFormFieldMapping = new OBFormFieldMappingImpl();
 
 		obFormFieldMapping.setNew(true);
-		obFormFieldMapping.setPrimaryKey(obFormFieldId);
+		obFormFieldMapping.setPrimaryKey(obFormFieldMappingId);
 
 		return obFormFieldMapping;
 	}
@@ -702,15 +1001,15 @@ public class OBFormFieldMappingPersistenceImpl
 	/**
 	 * Removes the ob form field mapping with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
-	public OBFormFieldMapping remove(long obFormFieldId)
+	public OBFormFieldMapping remove(long obFormFieldMappingId)
 		throws NoSuchFieldMappingException {
 
-		return remove((Serializable)obFormFieldId);
+		return remove((Serializable)obFormFieldMappingId);
 	}
 
 	/**
@@ -838,6 +1137,8 @@ public class OBFormFieldMappingPersistenceImpl
 			OBFormFieldMappingImpl.class, obFormFieldMappingModelImpl, false,
 			true);
 
+		cacheUniqueFindersCache(obFormFieldMappingModelImpl);
+
 		if (isNew) {
 			obFormFieldMapping.setNew(false);
 		}
@@ -875,26 +1176,26 @@ public class OBFormFieldMappingPersistenceImpl
 	/**
 	 * Returns the ob form field mapping with the primary key or throws a <code>NoSuchFieldMappingException</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws NoSuchFieldMappingException if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
-	public OBFormFieldMapping findByPrimaryKey(long obFormFieldId)
+	public OBFormFieldMapping findByPrimaryKey(long obFormFieldMappingId)
 		throws NoSuchFieldMappingException {
 
-		return findByPrimaryKey((Serializable)obFormFieldId);
+		return findByPrimaryKey((Serializable)obFormFieldMappingId);
 	}
 
 	/**
 	 * Returns the ob form field mapping with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping, or <code>null</code> if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
-	public OBFormFieldMapping fetchByPrimaryKey(long obFormFieldId) {
-		return fetchByPrimaryKey((Serializable)obFormFieldId);
+	public OBFormFieldMapping fetchByPrimaryKey(long obFormFieldMappingId) {
+		return fetchByPrimaryKey((Serializable)obFormFieldMappingId);
 	}
 
 	/**
@@ -1086,7 +1387,7 @@ public class OBFormFieldMappingPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "obFormFieldId";
+		return "obFormFieldMappingId";
 	}
 
 	@Override
@@ -1141,6 +1442,16 @@ public class OBFormFieldMappingPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByobFormEntryId",
 			new String[] {Long.class.getName()}, new String[] {"obFormEntryId"},
 			false);
+
+		_finderPathFetchByo_f = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByo_f",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"formFieldReference", "obFormEntryId"}, true);
+
+		_finderPathCountByo_f = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByo_f",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"formFieldReference", "obFormEntryId"}, false);
 	}
 
 	@Deactivate

@@ -69,31 +69,32 @@ public class OBFormFieldMappingModelImpl
 	public static final String TABLE_NAME = "OBForm_OBFormFieldMapping";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"obFormFieldId", Types.BIGINT}, {"userPropertyName", Types.VARCHAR},
-		{"formFieldId", Types.BIGINT}, {"obFormEntryId", Types.BIGINT}
+		{"obFormFieldMappingId", Types.BIGINT},
+		{"userPropertyName", Types.VARCHAR},
+		{"formFieldReference", Types.VARCHAR}, {"obFormEntryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("obFormFieldId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("obFormFieldMappingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userPropertyName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("formFieldId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("formFieldReference", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("obFormEntryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OBForm_OBFormFieldMapping (obFormFieldId LONG not null primary key,userPropertyName VARCHAR(75) null,formFieldId LONG,obFormEntryId LONG)";
+		"create table OBForm_OBFormFieldMapping (obFormFieldMappingId LONG not null primary key,userPropertyName VARCHAR(75) null,formFieldReference VARCHAR(75) null,obFormEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OBForm_OBFormFieldMapping";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY obFormFieldMapping.obFormFieldId ASC";
+		" ORDER BY obFormFieldMapping.obFormFieldMappingId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY OBForm_OBFormFieldMapping.obFormFieldId ASC";
+		" ORDER BY OBForm_OBFormFieldMapping.obFormFieldMappingId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -105,14 +106,20 @@ public class OBFormFieldMappingModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long OBFORMENTRYID_COLUMN_BITMASK = 1L;
+	public static final long FORMFIELDREFERENCE_COLUMN_BITMASK = 1L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long OBFORMENTRYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)
 	 */
 	@Deprecated
-	public static final long OBFORMFIELDID_COLUMN_BITMASK = 2L;
+	public static final long OBFORMFIELDMAPPINGID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -143,9 +150,9 @@ public class OBFormFieldMappingModelImpl
 
 		OBFormFieldMapping model = new OBFormFieldMappingImpl();
 
-		model.setObFormFieldId(soapModel.getObFormFieldId());
+		model.setObFormFieldMappingId(soapModel.getObFormFieldMappingId());
 		model.setUserPropertyName(soapModel.getUserPropertyName());
-		model.setFormFieldId(soapModel.getFormFieldId());
+		model.setFormFieldReference(soapModel.getFormFieldReference());
 		model.setObFormEntryId(soapModel.getObFormEntryId());
 
 		return model;
@@ -181,17 +188,17 @@ public class OBFormFieldMappingModelImpl
 
 	@Override
 	public long getPrimaryKey() {
-		return _obFormFieldId;
+		return _obFormFieldMappingId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setObFormFieldId(primaryKey);
+		setObFormFieldMappingId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _obFormFieldId;
+		return _obFormFieldMappingId;
 	}
 
 	@Override
@@ -304,11 +311,12 @@ public class OBFormFieldMappingModelImpl
 				new LinkedHashMap<String, BiConsumer<OBFormFieldMapping, ?>>();
 
 		attributeGetterFunctions.put(
-			"obFormFieldId", OBFormFieldMapping::getObFormFieldId);
+			"obFormFieldMappingId",
+			OBFormFieldMapping::getObFormFieldMappingId);
 		attributeSetterBiConsumers.put(
-			"obFormFieldId",
+			"obFormFieldMappingId",
 			(BiConsumer<OBFormFieldMapping, Long>)
-				OBFormFieldMapping::setObFormFieldId);
+				OBFormFieldMapping::setObFormFieldMappingId);
 		attributeGetterFunctions.put(
 			"userPropertyName", OBFormFieldMapping::getUserPropertyName);
 		attributeSetterBiConsumers.put(
@@ -316,11 +324,11 @@ public class OBFormFieldMappingModelImpl
 			(BiConsumer<OBFormFieldMapping, String>)
 				OBFormFieldMapping::setUserPropertyName);
 		attributeGetterFunctions.put(
-			"formFieldId", OBFormFieldMapping::getFormFieldId);
+			"formFieldReference", OBFormFieldMapping::getFormFieldReference);
 		attributeSetterBiConsumers.put(
-			"formFieldId",
-			(BiConsumer<OBFormFieldMapping, Long>)
-				OBFormFieldMapping::setFormFieldId);
+			"formFieldReference",
+			(BiConsumer<OBFormFieldMapping, String>)
+				OBFormFieldMapping::setFormFieldReference);
 		attributeGetterFunctions.put(
 			"obFormEntryId", OBFormFieldMapping::getObFormEntryId);
 		attributeSetterBiConsumers.put(
@@ -336,17 +344,17 @@ public class OBFormFieldMappingModelImpl
 
 	@JSON
 	@Override
-	public long getObFormFieldId() {
-		return _obFormFieldId;
+	public long getObFormFieldMappingId() {
+		return _obFormFieldMappingId;
 	}
 
 	@Override
-	public void setObFormFieldId(long obFormFieldId) {
+	public void setObFormFieldMappingId(long obFormFieldMappingId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_obFormFieldId = obFormFieldId;
+		_obFormFieldMappingId = obFormFieldMappingId;
 	}
 
 	@JSON
@@ -371,17 +379,31 @@ public class OBFormFieldMappingModelImpl
 
 	@JSON
 	@Override
-	public long getFormFieldId() {
-		return _formFieldId;
+	public String getFormFieldReference() {
+		if (_formFieldReference == null) {
+			return "";
+		}
+		else {
+			return _formFieldReference;
+		}
 	}
 
 	@Override
-	public void setFormFieldId(long formFieldId) {
+	public void setFormFieldReference(String formFieldReference) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_formFieldId = formFieldId;
+		_formFieldReference = formFieldReference;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalFormFieldReference() {
+		return getColumnOriginalValue("formFieldReference");
 	}
 
 	@JSON
@@ -464,9 +486,10 @@ public class OBFormFieldMappingModelImpl
 		OBFormFieldMappingImpl obFormFieldMappingImpl =
 			new OBFormFieldMappingImpl();
 
-		obFormFieldMappingImpl.setObFormFieldId(getObFormFieldId());
+		obFormFieldMappingImpl.setObFormFieldMappingId(
+			getObFormFieldMappingId());
 		obFormFieldMappingImpl.setUserPropertyName(getUserPropertyName());
-		obFormFieldMappingImpl.setFormFieldId(getFormFieldId());
+		obFormFieldMappingImpl.setFormFieldReference(getFormFieldReference());
 		obFormFieldMappingImpl.setObFormEntryId(getObFormEntryId());
 
 		obFormFieldMappingImpl.resetOriginalValues();
@@ -546,7 +569,8 @@ public class OBFormFieldMappingModelImpl
 		OBFormFieldMappingCacheModel obFormFieldMappingCacheModel =
 			new OBFormFieldMappingCacheModel();
 
-		obFormFieldMappingCacheModel.obFormFieldId = getObFormFieldId();
+		obFormFieldMappingCacheModel.obFormFieldMappingId =
+			getObFormFieldMappingId();
 
 		obFormFieldMappingCacheModel.userPropertyName = getUserPropertyName();
 
@@ -556,7 +580,17 @@ public class OBFormFieldMappingModelImpl
 			obFormFieldMappingCacheModel.userPropertyName = null;
 		}
 
-		obFormFieldMappingCacheModel.formFieldId = getFormFieldId();
+		obFormFieldMappingCacheModel.formFieldReference =
+			getFormFieldReference();
+
+		String formFieldReference =
+			obFormFieldMappingCacheModel.formFieldReference;
+
+		if ((formFieldReference != null) &&
+			(formFieldReference.length() == 0)) {
+
+			obFormFieldMappingCacheModel.formFieldReference = null;
+		}
 
 		obFormFieldMappingCacheModel.obFormEntryId = getObFormEntryId();
 
@@ -633,9 +667,9 @@ public class OBFormFieldMappingModelImpl
 
 	}
 
-	private long _obFormFieldId;
+	private long _obFormFieldMappingId;
 	private String _userPropertyName;
-	private long _formFieldId;
+	private String _formFieldReference;
 	private long _obFormEntryId;
 
 	public <T> T getColumnValue(String columnName) {
@@ -665,9 +699,10 @@ public class OBFormFieldMappingModelImpl
 	private void _setColumnOriginalValues() {
 		_columnOriginalValues = new HashMap<String, Object>();
 
-		_columnOriginalValues.put("obFormFieldId", _obFormFieldId);
+		_columnOriginalValues.put(
+			"obFormFieldMappingId", _obFormFieldMappingId);
 		_columnOriginalValues.put("userPropertyName", _userPropertyName);
-		_columnOriginalValues.put("formFieldId", _formFieldId);
+		_columnOriginalValues.put("formFieldReference", _formFieldReference);
 		_columnOriginalValues.put("obFormEntryId", _obFormEntryId);
 	}
 
@@ -682,11 +717,11 @@ public class OBFormFieldMappingModelImpl
 	static {
 		Map<String, Long> columnBitmasks = new HashMap<>();
 
-		columnBitmasks.put("obFormFieldId", 1L);
+		columnBitmasks.put("obFormFieldMappingId", 1L);
 
 		columnBitmasks.put("userPropertyName", 2L);
 
-		columnBitmasks.put("formFieldId", 4L);
+		columnBitmasks.put("formFieldReference", 4L);
 
 		columnBitmasks.put("obFormEntryId", 8L);
 

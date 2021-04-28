@@ -25,7 +25,7 @@ package com.liferay.form.onboarding.model.impl;
  */
 public class OBFormFieldMappingImpl extends OBFormFieldMappingBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a ob form field mapping model instance should use the {@link com.liferay.form.onboarding.model.OBFormFieldMapping} interface instead.

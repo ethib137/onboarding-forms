@@ -34,6 +34,21 @@ public class OBFormFieldMappingLocalServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Use <code>OBFormFieldMappingLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>OBFormFieldMappingLocalServiceUtil</code>.
+	 */
+	@Override
+	public com.liferay.form.onboarding.model.OBFormFieldMapping
+		addOBFormFieldMapping(
+			long obFormEntryId, String formFieldReference,
+			String userPropertyName) {
+
+		return _obFormFieldMappingLocalService.addOBFormFieldMapping(
+			obFormEntryId, formFieldReference, userPropertyName);
+	}
+
+	/**
 	 * Adds the ob form field mapping to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -56,15 +71,15 @@ public class OBFormFieldMappingLocalServiceWrapper
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormFieldMapping
-		createOBFormFieldMapping(long obFormFieldId) {
+		createOBFormFieldMapping(long obFormFieldMappingId) {
 
 		return _obFormFieldMappingLocalService.createOBFormFieldMapping(
-			obFormFieldId);
+			obFormFieldMappingId);
 	}
 
 	/**
@@ -86,17 +101,27 @@ public class OBFormFieldMappingLocalServiceWrapper
 	 * <strong>Important:</strong> Inspect OBFormFieldMappingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormFieldMapping
-			deleteOBFormFieldMapping(long obFormFieldId)
+			deleteOBFormFieldMapping(long obFormFieldMappingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormFieldMappingLocalService.deleteOBFormFieldMapping(
-			obFormFieldId);
+			obFormFieldMappingId);
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormFieldMapping
+			deleteOBFormFieldMapping(
+				long obFormEntryId, String formFieldReference)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormFieldMappingLocalService.deleteOBFormFieldMapping(
+			obFormEntryId, formFieldReference);
 	}
 
 	/**
@@ -224,10 +249,10 @@ public class OBFormFieldMappingLocalServiceWrapper
 
 	@Override
 	public com.liferay.form.onboarding.model.OBFormFieldMapping
-		fetchOBFormFieldMapping(long obFormFieldId) {
+		fetchOBFormFieldMapping(long obFormFieldMappingId) {
 
 		return _obFormFieldMappingLocalService.fetchOBFormFieldMapping(
-			obFormFieldId);
+			obFormFieldMappingId);
 	}
 
 	@Override
@@ -248,17 +273,26 @@ public class OBFormFieldMappingLocalServiceWrapper
 	/**
 	 * Returns the ob form field mapping with the primary key.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormFieldMapping
-			getOBFormFieldMapping(long obFormFieldId)
+			getOBFormFieldMapping(long obFormFieldMappingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormFieldMappingLocalService.getOBFormFieldMapping(
-			obFormFieldId);
+			obFormFieldMappingId);
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormFieldMapping
+			getOBFormFieldMapping(long obFormEntryId, String formFieldReference)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormFieldMappingLocalService.getOBFormFieldMapping(
+			obFormEntryId, formFieldReference);
 	}
 
 	/**
@@ -280,6 +314,22 @@ public class OBFormFieldMappingLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.form.onboarding.model.OBFormFieldMapping>
+		getOBFormFieldMappings(long obFormEntryId) {
+
+		return _obFormFieldMappingLocalService.getOBFormFieldMappings(
+			obFormEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.form.onboarding.model.OBFormFieldMapping>
+		getOBFormFieldMappings(long obFormEntryId, int start, int end) {
+
+		return _obFormFieldMappingLocalService.getOBFormFieldMappings(
+			obFormEntryId, start, end);
+	}
+
 	/**
 	 * Returns the number of ob form field mappings.
 	 *
@@ -288,6 +338,12 @@ public class OBFormFieldMappingLocalServiceWrapper
 	@Override
 	public int getOBFormFieldMappingsCount() {
 		return _obFormFieldMappingLocalService.getOBFormFieldMappingsCount();
+	}
+
+	@Override
+	public int getOBFormFieldMappingsCount(long obFormEntryId) {
+		return _obFormFieldMappingLocalService.getOBFormFieldMappingsCount(
+			obFormEntryId);
 	}
 
 	/**
@@ -309,6 +365,17 @@ public class OBFormFieldMappingLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormFieldMappingLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormFieldMapping
+			updateOBFormFieldMapping(
+				long obFormFieldMappingId, String formFieldReference,
+				String userPropertyName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormFieldMappingLocalService.updateOBFormFieldMapping(
+			obFormFieldMappingId, formFieldReference, userPropertyName);
 	}
 
 	/**

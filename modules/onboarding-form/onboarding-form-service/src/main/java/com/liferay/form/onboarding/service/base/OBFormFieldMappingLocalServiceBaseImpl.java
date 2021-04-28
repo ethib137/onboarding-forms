@@ -95,13 +95,15 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 	/**
 	 * Creates a new ob form field mapping with the primary key. Does not add the ob form field mapping to the database.
 	 *
-	 * @param obFormFieldId the primary key for the new ob form field mapping
+	 * @param obFormFieldMappingId the primary key for the new ob form field mapping
 	 * @return the new ob form field mapping
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public OBFormFieldMapping createOBFormFieldMapping(long obFormFieldId) {
-		return obFormFieldMappingPersistence.create(obFormFieldId);
+	public OBFormFieldMapping createOBFormFieldMapping(
+		long obFormFieldMappingId) {
+
+		return obFormFieldMappingPersistence.create(obFormFieldMappingId);
 	}
 
 	/**
@@ -111,16 +113,17 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect OBFormFieldMappingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping that was removed
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public OBFormFieldMapping deleteOBFormFieldMapping(long obFormFieldId)
+	public OBFormFieldMapping deleteOBFormFieldMapping(
+			long obFormFieldMappingId)
 		throws PortalException {
 
-		return obFormFieldMappingPersistence.remove(obFormFieldId);
+		return obFormFieldMappingPersistence.remove(obFormFieldMappingId);
 	}
 
 	/**
@@ -230,22 +233,26 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 	}
 
 	@Override
-	public OBFormFieldMapping fetchOBFormFieldMapping(long obFormFieldId) {
-		return obFormFieldMappingPersistence.fetchByPrimaryKey(obFormFieldId);
+	public OBFormFieldMapping fetchOBFormFieldMapping(
+		long obFormFieldMappingId) {
+
+		return obFormFieldMappingPersistence.fetchByPrimaryKey(
+			obFormFieldMappingId);
 	}
 
 	/**
 	 * Returns the ob form field mapping with the primary key.
 	 *
-	 * @param obFormFieldId the primary key of the ob form field mapping
+	 * @param obFormFieldMappingId the primary key of the ob form field mapping
 	 * @return the ob form field mapping
 	 * @throws PortalException if a ob form field mapping with the primary key could not be found
 	 */
 	@Override
-	public OBFormFieldMapping getOBFormFieldMapping(long obFormFieldId)
+	public OBFormFieldMapping getOBFormFieldMapping(long obFormFieldMappingId)
 		throws PortalException {
 
-		return obFormFieldMappingPersistence.findByPrimaryKey(obFormFieldId);
+		return obFormFieldMappingPersistence.findByPrimaryKey(
+			obFormFieldMappingId);
 	}
 
 	@Override
@@ -258,7 +265,8 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(OBFormFieldMapping.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("obFormFieldId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"obFormFieldMappingId");
 
 		return actionableDynamicQuery;
 	}
@@ -276,7 +284,7 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(OBFormFieldMapping.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"obFormFieldId");
+			"obFormFieldMappingId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -289,7 +297,8 @@ public abstract class OBFormFieldMappingLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(OBFormFieldMapping.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("obFormFieldId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"obFormFieldMappingId");
 	}
 
 	/**
