@@ -1,0 +1,27 @@
+{
+	"dependencies": {
+		"@clayui/alert": "^3.3.0",
+		"@clayui/badge": "^3.0.1",
+		"@clayui/button": "^3.3.0",
+		"@clayui/form": "^3.6.0",
+		"@clayui/icon": "^3.0.4",
+		"@clayui/multi-select": "^3.25.3",
+		"@clayui/panel": "^3.1.0",
+		"@clayui/tabs": "^3.1.0",
+		"react": "16.8.6",
+		"react-dom": "16.8.6"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.7.5",
+		"@babel/core": "^7.7.5",
+		"@babel/preset-env": "^7.7.6",
+		"@babel/preset-react": "^7.7.4",
+		"liferay-npm-bundler": "2.18.2"
+	},
+	"main": "onboarding_form/js/index.es.js",
+	"name": "onboarding-form-web",
+	"scripts": {
+		"build": "babel --source-maps -d build/resources/main/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler"
+	},
+	"version": "1.0.0"
+}
