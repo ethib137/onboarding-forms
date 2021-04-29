@@ -682,6 +682,73 @@ public class OBFormEntryUtil {
 	}
 
 	/**
+	 * Returns all the ob form entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindBygroupId(long groupId) {
+		return getPersistence().filterFindBygroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the ob form entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of ob form entries
+	 * @param end the upper bound of the range of ob form entries (not inclusive)
+	 * @return the range of matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindBygroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindBygroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ob form entries that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of ob form entries
+	 * @param end the upper bound of the range of ob form entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindBygroupId(
+		long groupId, int start, int end,
+		OrderByComparator<OBFormEntry> orderByComparator) {
+
+		return getPersistence().filterFindBygroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the ob form entries before and after the current ob form entry in the ordered set of ob form entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param obFormEntryId the primary key of the current ob form entry
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ob form entry
+	 * @throws NoSuchEntryException if a ob form entry with the primary key could not be found
+	 */
+	public static OBFormEntry[] filterFindBygroupId_PrevAndNext(
+			long obFormEntryId, long groupId,
+			OrderByComparator<OBFormEntry> orderByComparator)
+		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindBygroupId_PrevAndNext(
+			obFormEntryId, groupId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the ob form entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -698,6 +765,16 @@ public class OBFormEntryUtil {
 	 */
 	public static int countBygroupId(long groupId) {
 		return getPersistence().countBygroupId(groupId);
+	}
+
+	/**
+	 * Returns the number of ob form entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching ob form entries that the user has permission to view
+	 */
+	public static int filterCountBygroupId(long groupId) {
+		return getPersistence().filterCountBygroupId(groupId);
 	}
 
 	/**
@@ -922,6 +999,77 @@ public class OBFormEntryUtil {
 	}
 
 	/**
+	 * Returns all the ob form entries that the user has permission to view where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindByn_g(long groupId, String name) {
+		return getPersistence().filterFindByn_g(groupId, name);
+	}
+
+	/**
+	 * Returns a range of all the ob form entries that the user has permission to view where groupId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of ob form entries
+	 * @param end the upper bound of the range of ob form entries (not inclusive)
+	 * @return the range of matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindByn_g(
+		long groupId, String name, int start, int end) {
+
+		return getPersistence().filterFindByn_g(groupId, name, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ob form entries that the user has permissions to view where groupId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OBFormEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of ob form entries
+	 * @param end the upper bound of the range of ob form entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ob form entries that the user has permission to view
+	 */
+	public static List<OBFormEntry> filterFindByn_g(
+		long groupId, String name, int start, int end,
+		OrderByComparator<OBFormEntry> orderByComparator) {
+
+		return getPersistence().filterFindByn_g(
+			groupId, name, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the ob form entries before and after the current ob form entry in the ordered set of ob form entries that the user has permission to view where groupId = &#63; and name = &#63;.
+	 *
+	 * @param obFormEntryId the primary key of the current ob form entry
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next ob form entry
+	 * @throws NoSuchEntryException if a ob form entry with the primary key could not be found
+	 */
+	public static OBFormEntry[] filterFindByn_g_PrevAndNext(
+			long obFormEntryId, long groupId, String name,
+			OrderByComparator<OBFormEntry> orderByComparator)
+		throws com.liferay.form.onboarding.exception.NoSuchEntryException {
+
+		return getPersistence().filterFindByn_g_PrevAndNext(
+			obFormEntryId, groupId, name, orderByComparator);
+	}
+
+	/**
 	 * Removes all the ob form entries where groupId = &#63; and name = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -940,6 +1088,17 @@ public class OBFormEntryUtil {
 	 */
 	public static int countByn_g(long groupId, String name) {
 		return getPersistence().countByn_g(groupId, name);
+	}
+
+	/**
+	 * Returns the number of ob form entries that the user has permission to view where groupId = &#63; and name = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching ob form entries that the user has permission to view
+	 */
+	public static int filterCountByn_g(long groupId, String name) {
+		return getPersistence().filterCountByn_g(groupId, name);
 	}
 
 	/**

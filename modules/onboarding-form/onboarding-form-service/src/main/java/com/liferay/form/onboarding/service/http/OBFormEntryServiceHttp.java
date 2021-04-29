@@ -14,13 +14,21 @@
 
 package com.liferay.form.onboarding.service.http;
 
+import com.liferay.form.onboarding.service.OBFormEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.form.onboarding.service.OBFormEntryServiceUtil</code> service
+ * <code>OBFormEntryServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -42,4 +50,150 @@ package com.liferay.form.onboarding.service.http;
  * @generated
  */
 public class OBFormEntryServiceHttp {
+
+	public static com.liferay.form.onboarding.model.OBFormEntry addOBFormEntry(
+			HttpPrincipal httpPrincipal, long userId, String name, long formId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OBFormEntryServiceUtil.class, "addOBFormEntry",
+				_addOBFormEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, name, formId, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.form.onboarding.model.OBFormEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.form.onboarding.model.OBFormEntry
+			deleteOBFormEntry(HttpPrincipal httpPrincipal, long obFormEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OBFormEntryServiceUtil.class, "deleteOBFormEntry",
+				_deleteOBFormEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, obFormEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.form.onboarding.model.OBFormEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.form.onboarding.model.OBFormEntry
+			updateOBFormEntry(
+				HttpPrincipal httpPrincipal, long userId, long obFormEntryId,
+				String name, long[] organizationIds, long[] roleIds,
+				long[] siteIds, long[] userGroupIds, boolean sendEmail,
+				boolean active,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				OBFormEntryServiceUtil.class, "updateOBFormEntry",
+				_updateOBFormEntryParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, obFormEntryId, name, organizationIds,
+				roleIds, siteIds, userGroupIds, sendEmail, active,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.form.onboarding.model.OBFormEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OBFormEntryServiceHttp.class);
+
+	private static final Class<?>[] _addOBFormEntryParameterTypes0 =
+		new Class[] {
+			long.class, String.class, long.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteOBFormEntryParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateOBFormEntryParameterTypes2 =
+		new Class[] {
+			long.class, long.class, String.class, long[].class, long[].class,
+			long[].class, long[].class, boolean.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+
 }

@@ -117,10 +117,12 @@ public class OBFormEntryLocalServiceWrapper
 	 *
 	 * @param obFormEntry the ob form entry
 	 * @return the ob form entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.form.onboarding.model.OBFormEntry deleteOBFormEntry(
-		com.liferay.form.onboarding.model.OBFormEntry obFormEntry) {
+			com.liferay.form.onboarding.model.OBFormEntry obFormEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _obFormEntryLocalService.deleteOBFormEntry(obFormEntry);
 	}

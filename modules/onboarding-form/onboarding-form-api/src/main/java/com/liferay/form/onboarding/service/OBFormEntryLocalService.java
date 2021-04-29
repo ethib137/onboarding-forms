@@ -126,9 +126,11 @@ public interface OBFormEntryLocalService
 	 *
 	 * @param obFormEntry the ob form entry
 	 * @return the ob form entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public OBFormEntry deleteOBFormEntry(OBFormEntry obFormEntry);
+	public OBFormEntry deleteOBFormEntry(OBFormEntry obFormEntry)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

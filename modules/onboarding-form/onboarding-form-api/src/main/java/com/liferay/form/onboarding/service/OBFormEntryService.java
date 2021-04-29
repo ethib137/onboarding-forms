@@ -14,11 +14,13 @@
 
 package com.liferay.form.onboarding.service;
 
+import com.liferay.form.onboarding.model.OBFormEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -49,10 +51,30 @@ public interface OBFormEntryService extends BaseService {
 	 */
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use <code>OBFormEntryServiceUtil</code> to access the ob form entry remote service.
+	 */
+	public OBFormEntry addOBFormEntry(
+			long userId, String name, long formId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public OBFormEntry deleteOBFormEntry(long obFormEntryId)
+		throws PortalException;
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public OBFormEntry updateOBFormEntry(
+			long userId, long obFormEntryId, String name,
+			long[] organizationIds, long[] roleIds, long[] siteIds,
+			long[] userGroupIds, boolean sendEmail, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 }

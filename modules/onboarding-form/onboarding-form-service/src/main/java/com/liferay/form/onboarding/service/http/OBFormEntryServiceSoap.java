@@ -14,9 +14,15 @@
 
 package com.liferay.form.onboarding.service.http;
 
+import com.liferay.form.onboarding.service.OBFormEntryServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.form.onboarding.service.OBFormEntryServiceUtil</code> service
+ * <code>OBFormEntryServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,76 @@ package com.liferay.form.onboarding.service.http;
  */
 @Deprecated
 public class OBFormEntryServiceSoap {
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use <code>OBFormEntryServiceUtil</code> to access the ob form entry remote service.
+	 */
+	public static com.liferay.form.onboarding.model.OBFormEntrySoap
+			addOBFormEntry(
+				long userId, String name, long formId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.form.onboarding.model.OBFormEntry returnValue =
+				OBFormEntryServiceUtil.addOBFormEntry(
+					userId, name, formId, serviceContext);
+
+			return com.liferay.form.onboarding.model.OBFormEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.form.onboarding.model.OBFormEntrySoap
+			deleteOBFormEntry(long obFormEntryId)
+		throws RemoteException {
+
+		try {
+			com.liferay.form.onboarding.model.OBFormEntry returnValue =
+				OBFormEntryServiceUtil.deleteOBFormEntry(obFormEntryId);
+
+			return com.liferay.form.onboarding.model.OBFormEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.form.onboarding.model.OBFormEntrySoap
+			updateOBFormEntry(
+				long userId, long obFormEntryId, String name,
+				long[] organizationIds, long[] roleIds, long[] siteIds,
+				long[] userGroupIds, boolean sendEmail, boolean active,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.form.onboarding.model.OBFormEntry returnValue =
+				OBFormEntryServiceUtil.updateOBFormEntry(
+					userId, obFormEntryId, name, organizationIds, roleIds,
+					siteIds, userGroupIds, sendEmail, active, serviceContext);
+
+			return com.liferay.form.onboarding.model.OBFormEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		OBFormEntryServiceSoap.class);
+
 }

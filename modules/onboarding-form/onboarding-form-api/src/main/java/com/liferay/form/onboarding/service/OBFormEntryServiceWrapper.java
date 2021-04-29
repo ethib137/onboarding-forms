@@ -31,6 +31,29 @@ public class OBFormEntryServiceWrapper
 	}
 
 	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use <code>OBFormEntryServiceUtil</code> to access the ob form entry remote service.
+	 */
+	@Override
+	public com.liferay.form.onboarding.model.OBFormEntry addOBFormEntry(
+			long userId, String name, long formId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormEntryService.addOBFormEntry(
+			userId, name, formId, serviceContext);
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormEntry deleteOBFormEntry(
+			long obFormEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormEntryService.deleteOBFormEntry(obFormEntryId);
+	}
+
+	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
@@ -38,6 +61,19 @@ public class OBFormEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _obFormEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.form.onboarding.model.OBFormEntry updateOBFormEntry(
+			long userId, long obFormEntryId, String name,
+			long[] organizationIds, long[] roleIds, long[] siteIds,
+			long[] userGroupIds, boolean sendEmail, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _obFormEntryService.updateOBFormEntry(
+			userId, obFormEntryId, name, organizationIds, roleIds, siteIds,
+			userGroupIds, sendEmail, active, serviceContext);
 	}
 
 	@Override

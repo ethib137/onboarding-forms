@@ -117,10 +117,12 @@ public class OBFormEntryLocalServiceUtil {
 	 *
 	 * @param obFormEntry the ob form entry
 	 * @return the ob form entry that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.form.onboarding.model.OBFormEntry
-		deleteOBFormEntry(
-			com.liferay.form.onboarding.model.OBFormEntry obFormEntry) {
+			deleteOBFormEntry(
+				com.liferay.form.onboarding.model.OBFormEntry obFormEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteOBFormEntry(obFormEntry);
 	}

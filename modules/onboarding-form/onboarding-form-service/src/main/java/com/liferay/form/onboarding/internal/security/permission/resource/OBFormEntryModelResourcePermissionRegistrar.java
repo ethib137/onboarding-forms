@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
-import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
@@ -55,17 +54,11 @@ public class OBFormEntryModelResourcePermissionRegistrar {
 				OBFormEntry.class, OBFormEntry::getObFormEntryId,
 				_obFormEntryLocalService::getOBFormEntry,
 				_portletResourcePermission,
-				(modelResourcePermission, consumer) -> {
-					consumer.accept(
-						new StagedModelPermissionLogic<>(
-							_stagingPermission,
-							OnboardingFormPortletKeys.ONBOARDING_FORM,
-							OBFormEntry::getObFormEntryId));
-					consumer.accept(
-						new WorkflowedModelPermissionLogic<>(
-							_workflowPermission, modelResourcePermission,
-							_groupLocalService, OBFormEntry::getObFormEntryId));
-				}),
+				(modelResourcePermission, consumer) -> consumer.accept(
+					new StagedModelPermissionLogic<>(
+						_stagingPermission,
+						OnboardingFormPortletKeys.ONBOARDING_FORM,
+						OBFormEntry::getObFormEntryId))),
 			properties);
 	}
 
