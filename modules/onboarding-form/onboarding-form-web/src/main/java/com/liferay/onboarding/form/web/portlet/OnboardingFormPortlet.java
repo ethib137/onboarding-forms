@@ -14,8 +14,8 @@
 
 package com.liferay.onboarding.form.web.portlet;
 
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;

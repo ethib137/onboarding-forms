@@ -14,8 +14,8 @@
 
 package com.liferay.onboarding.form.web.portlet.action;
 
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
 import com.liferay.onboarding.form.web.display.context.OBFormEntriesDisplayContext;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
 import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.Portal;

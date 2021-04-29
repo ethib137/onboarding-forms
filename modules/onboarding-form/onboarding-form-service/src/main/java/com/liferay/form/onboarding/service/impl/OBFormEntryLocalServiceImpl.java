@@ -20,6 +20,7 @@ import com.liferay.form.onboarding.model.OBFormEntry;
 import com.liferay.form.onboarding.service.base.OBFormEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -83,6 +84,10 @@ public class OBFormEntryLocalServiceImpl
 		obFormEntry.setActive(true);
 		obFormEntry.setExpandoBridgeAttributes(serviceContext);
 
+		resourceLocalService.addResources(
+			user.getCompanyId(), groupId, userId, OBFormEntry.class.getName(),
+			obFormEntryId, false, true, true);
+
 		return obFormEntryPersistence.update(obFormEntry);
 	}
 
@@ -92,8 +97,14 @@ public class OBFormEntryLocalServiceImpl
 		return deleteOBFormEntry(getOBFormEntry(obFormEntryId));
 	}
 
-	public OBFormEntry deleteOBFormEntry(OBFormEntry obFormEntry) {
+	public OBFormEntry deleteOBFormEntry(OBFormEntry obFormEntry)
+		throws PortalException {
+
 		obFormEntryPersistence.remove(obFormEntry);
+
+		resourceLocalService.deleteResource(
+			obFormEntry.getCompanyId(), OBFormEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, obFormEntry.getObFormEntryId());
 
 		return obFormEntry;
 	}
@@ -162,6 +173,11 @@ public class OBFormEntryLocalServiceImpl
 		obFormEntry.setSendEmail(sendEmail);
 		obFormEntry.setActive(active);
 		obFormEntry.setExpandoBridgeAttributes(serviceContext);
+
+		resourceLocalService.updateResources(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			OBFormEntry.class.getName(), obFormEntryId,
+			serviceContext.getModelPermissions());
 
 		return updateOBFormEntry(obFormEntry);
 	}

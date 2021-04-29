@@ -116,7 +116,13 @@ public class OnboardingFormInstanceRecordModelListener
 					formRecordMappedValues,
 					OnboardingFormConstants.MAPPABLE_FIELD_PASSWORD2);
 
-				boolean autoPassword = StringUtil.equals(password1, password2);
+				boolean autoPassword = false;
+
+				if (!StringUtil.equals(password1, password2) ||
+					Validator.isNull(password1)) {
+
+					autoPassword = true;
+				}
 
 				String screenName = _getStringValue(
 					formRecordMappedValues,
@@ -220,17 +226,19 @@ public class OnboardingFormInstanceRecordModelListener
 
 		Calendar calendar = Calendar.getInstance();
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
 		String stringValue = _getStringValue(
 			formRecordMappedValues, mappableField);
 
-		try {
-			Date dateOfBirth = df.parse(stringValue);
+		if (Validator.isNotNull(stringValue)) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-			calendar.setTime(dateOfBirth);
-		}
-		catch (ParseException e) {
+			try {
+				Date dateOfBirth = df.parse(stringValue);
+
+				calendar.setTime(dateOfBirth);
+			}
+			catch (ParseException e) {
+			}
 		}
 
 		return calendar;

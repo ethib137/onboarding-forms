@@ -17,8 +17,6 @@
 <%@ include file="/META-INF/resources/onboarding_form/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 OBFormEntry entry = (OBFormEntry)row.getObject();
@@ -32,21 +30,44 @@ OBFormEntry entry = (OBFormEntry)row.getObject();
 	message="actions"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editURL">
-		<portlet:param name="obFormEntryId" value="<%= String.valueOf(entry.getObFormEntryId()) %>" />
-		<portlet:param name="mvcRenderCommandName" value="/onboarding_form/edit_entry" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
+	<c:if test="<%= OBFormEntryModelPermission.contains(permissionChecker, entry.getObFormEntryId(), ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="obFormEntryId" value="<%= String.valueOf(entry.getObFormEntryId()) %>" />
+			<portlet:param name="mvcRenderCommandName" value="/onboarding_form/edit_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		label="<%= true %>"
-		message="edit"
-		url="<%= editURL.toString() %>"
-	/>
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="edit"
+			url="<%= editURL.toString() %>"
+		/>
+	</c:if>
 
-	<portlet:actionURL name="deleteEntry" var="deleteURL">
-		<portlet:param name="obFormEntryId" value="<%= String.valueOf(entry.getObFormEntryId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= OBFormEntryModelPermission.contains(permissionChecker, entry.getObFormEntryId(), ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= OBFormEntry.class.getName() %>"
+			modelResourceDescription="<%= entry.getName() %>"
+			resourceGroupId="<%= String.valueOf(entry.getGroupId()) %>"
+			resourcePrimKey="<%= String.valueOf(entry.getObFormEntryId()) %>"
+			var="permissionsEntryURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
 
-	<liferay-ui:icon-delete url="<%= deleteURL.toString() %>" />
+		<liferay-ui:icon
+			label="<%= true %>"
+			message="permissions"
+			method="get"
+			url="<%= permissionsEntryURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= OBFormEntryModelPermission.contains(permissionChecker, entry.getObFormEntryId(), ActionKeys.DELETE) %>">
+		<portlet:actionURL name="deleteEntry" var="deleteURL">
+			<portlet:param name="obFormEntryId" value="<%= String.valueOf(entry.getObFormEntryId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete url="<%= deleteURL.toString() %>" />
+	</c:if>
 </liferay-ui:icon-menu>

@@ -2,6 +2,7 @@ Bundle-Name: onboarding-form-api
 Bundle-SymbolicName: com.liferay.form.onboarding.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.form.onboarding.constants,\
 	com.liferay.form.onboarding.exception,\
 	com.liferay.form.onboarding.model,\
 	com.liferay.form.onboarding.service,\

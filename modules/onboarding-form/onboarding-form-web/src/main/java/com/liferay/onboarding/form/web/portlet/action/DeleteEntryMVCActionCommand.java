@@ -14,9 +14,9 @@
 
 package com.liferay.onboarding.form.web.portlet.action;
 
-import com.liferay.form.onboarding.service.OBFormEntryLocalService;
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
+import com.liferay.form.onboarding.service.OBFormEntryService;
 import com.liferay.onboarding.form.web.portlet.OnboardingFormPortlet;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,7 +51,7 @@ public class DeleteEntryMVCActionCommand extends BaseMVCActionCommand {
 		long obFormEntryId = ParamUtil.getLong(actionRequest, "obFormEntryId");
 
 		try {
-			_obFormEntryLocalService.deleteOBFormEntry(obFormEntryId);
+			_obFormEntryService.deleteOBFormEntry(obFormEntryId);
 
 			actionResponse.setRenderParameter(
 				"obFormEntryId", String.valueOf(obFormEntryId));
@@ -62,7 +62,7 @@ public class DeleteEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 
-			actionResponse.setRenderParameter("mvcPath", "/edit_entry.jsp");
+			actionResponse.setRenderParameter("mvcPath", "/view.jsp");
 		}
 	}
 
@@ -70,6 +70,6 @@ public class DeleteEntryMVCActionCommand extends BaseMVCActionCommand {
 		OnboardingFormPortlet.class.getName());
 
 	@Reference
-	private OBFormEntryLocalService _obFormEntryLocalService;
+	private OBFormEntryService _obFormEntryService;
 
 }

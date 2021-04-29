@@ -15,9 +15,9 @@
 package com.liferay.onboarding.form.web.portlet.action;
 
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
 import com.liferay.form.onboarding.service.OBFormFieldMappingLocalService;
 import com.liferay.onboarding.form.web.display.context.OnboardingFormDisplayContext;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
 import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;

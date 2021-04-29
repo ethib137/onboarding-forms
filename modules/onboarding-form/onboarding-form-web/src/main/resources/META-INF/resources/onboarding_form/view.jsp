@@ -42,7 +42,10 @@ SearchContainer<OBFormEntry> entriesSearchContainer = obFormEntriesDisplayContex
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text href="<%= editURL.toString() %>" property="name" />
+			<liferay-ui:search-container-column-text
+				href="<%= OBFormEntryModelPermission.contains(permissionChecker, entry.getObFormEntryId(), ActionKeys.UPDATE) ? editURL : null %>"
+				property="name"
+			/>
 
 			<liferay-ui:search-container-column-text name="form-id" property="formId" />
 			<liferay-ui:search-container-column-text property="active" />

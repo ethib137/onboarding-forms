@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.onboarding.form.web.portlet.constants;
+<%@ include file="/onboarding_form/init.jsp" %>
 
-/**
- * @author Evan Thibodeau
- */
-public class OnboardingFormPortletKeys {
+<clay:container-fluid cssClass="main-content-body">
+	<liferay-ui:error-header />
 
-	public static final String ONBOARDING_FORM =
-		"com_liferay_onboarding_form_portlet_OnboardingFormPortlet";
-
-}
+	<liferay-ui:error-principal />
+</clay:container-fluid>

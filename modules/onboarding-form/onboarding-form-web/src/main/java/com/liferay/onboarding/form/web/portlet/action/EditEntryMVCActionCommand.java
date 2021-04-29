@@ -14,19 +14,23 @@
 
 package com.liferay.onboarding.form.web.portlet.action;
 
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
 import com.liferay.form.onboarding.exception.OBFormEntryFormException;
 import com.liferay.form.onboarding.exception.OBFormEntryNameException;
 import com.liferay.form.onboarding.model.OBFormEntry;
 import com.liferay.form.onboarding.model.OBFormFieldMapping;
-import com.liferay.form.onboarding.service.OBFormEntryLocalService;
+import com.liferay.form.onboarding.service.OBFormEntryService;
 import com.liferay.form.onboarding.service.OBFormFieldMappingLocalService;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,6 +40,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,7 +95,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "sendEmail");
 				boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
-				_obFormEntryLocalService.updateOBFormEntry(
+				_obFormEntryService.updateOBFormEntry(
 					userId, obFormEntryId, name, organizationIds, roleIds,
 					siteIds, userGroupIds, sendEmail, active, serviceContext);
 
@@ -113,16 +119,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 						"you-must-select-a-form");
 				}
 
-				OBFormEntry obFormEntry =
-					_obFormEntryLocalService.addOBFormEntry(
-						userId, name, formId, serviceContext);
+				OBFormEntry obFormEntry = _obFormEntryService.addOBFormEntry(
+					userId, name, formId, serviceContext);
 
-				actionResponse.setRenderParameter(
-					"obFormEntryId",
-					String.valueOf(obFormEntry.getObFormEntryId()));
-
-				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "/onboarding_form/edit_entry");
+				_sendDraftRedirect(actionRequest, actionResponse, obFormEntry);
 			}
 		}
 		catch (Exception e) {
@@ -133,6 +133,43 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	private String _getEditRedirect(
+			ActionRequest actionRequest, OBFormEntry entry, String redirect)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, portletConfig.getPortletName(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/onboarding_form/edit_entry");
+
+		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(entry.getGroupId()), false);
+		portletURL.setParameter(
+			"obFormEntryId", String.valueOf(entry.getObFormEntryId()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
+	private void _sendDraftRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			OBFormEntry entry)
+		throws Exception {
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(
+			actionRequest, actionResponse,
+			_getEditRedirect(actionRequest, entry, redirect));
 	}
 
 	private void _updateMappableFields(
@@ -183,7 +220,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private OBFormEntryLocalService _obFormEntryLocalService;
+	private OBFormEntryService _obFormEntryService;
 
 	@Reference
 	private OBFormFieldMappingLocalService _obFormFieldMappingLocalService;

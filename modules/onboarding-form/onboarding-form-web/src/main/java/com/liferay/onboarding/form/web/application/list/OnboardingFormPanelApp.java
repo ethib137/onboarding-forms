@@ -17,7 +17,7 @@ package com.liferay.onboarding.form.web.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.onboarding.form.web.portlet.constants.OnboardingFormPortletKeys;
+import com.liferay.form.onboarding.constants.OnboardingFormPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
