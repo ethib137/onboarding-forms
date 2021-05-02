@@ -67,8 +67,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			OBFormEntry.class.getName(), actionRequest);
 
-		System.out.println("TEST FormOnboardingEditEntryMVCAction");
-
 		try {
 			String name = ParamUtil.getString(actionRequest, "name");
 
