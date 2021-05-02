@@ -46,13 +46,13 @@ liferay.workspace.home.dir=/path/to/liferay/home
 
 Once deployed, this widget will show up in the site administration menu right below `Forms`. Make sure you already have some forms on your site and then click the blue *+* to add a new onboarding form entry.
 
-Add a name for your onboarding form entry, select a form, and click continue. 
+Add a name for your onboarding form entry, select a form, and click continue.
 
 The form will now include all the available fields from the form you selected. You can choose which user attributes you want to map the form fields too.
 
 You can then select any organizations, roles, sites, or user groups you want you new users to have and save your form.
 
-Now when anyone fills out your form, a new user will be created from the contents of the form. 
+Now when anyone fills out your form, a new user will be created from the contents of the form.
 
 ### Note
 
@@ -61,3 +61,23 @@ Now when anyone fills out your form, a new user will be created from the content
 * If a screen name is selected that does not match the screen name requirements, a screen name will be generated for the user.
 
 ## Issues & Questions Welcome
+
+## Contributing Guidelines
+
+Pull requests welcome.
+
+### Releasing
+
+Releases are handled using Github actions.
+
+To release a new version do the following:
+
+1. Create a git tag.
+
+	1. `git tag v0.0.1`
+
+1. Push the tag to Github.
+
+	1. `git push origin v0.0.1`
+
+The Github action will be triggered and will attach all assets to the release.
