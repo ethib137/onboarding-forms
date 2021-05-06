@@ -8,7 +8,7 @@ This portlet highlights some really cool features of Liferay as a development pl
   * In this portlet I'm using it to manage the information around picking a form, mapping the form fields to user properties, and how the user should be created.
 * [Model Listeners](https://help.liferay.com/hc/en-us/articles/360029122631-Model-Listeners) let you listen for persistence events of Liferay entities and do something in response.
   * This portlet listens to the `onAfterUpdate` event of a formRecord and creates a user with the information from the form.
-* [The Panel App Inteface](https://help.liferay.com/hc/en-us/articles/360028833612-Panel-App-Template) let's you add your Liferay customizations to different admin areas of Liferay's UI.
+* [The Panel App Interface](https://help.liferay.com/hc/en-us/articles/360028833612-Panel-App-Template) let's you add your Liferay customizations to different admin areas of Liferay's UI.
   * In this case it lets me add my portlet to the Site Administration Menu, right next to Forms.
 * [Clay React Components](https://clayui.com/docs/components/multi-select.html) such as the multi select are used as needed in the JSP.
   * JSP's are the default in Liferay, but sometimes a little extra JS sugar can be helpful. Inside a form built with JSP tags I use a react component for a multi select to create a nicer user interaction when adding roles and sites to the future user that will be added.
