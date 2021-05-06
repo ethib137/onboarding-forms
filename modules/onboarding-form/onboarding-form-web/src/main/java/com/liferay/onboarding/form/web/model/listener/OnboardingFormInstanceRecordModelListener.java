@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.DateFormat;
@@ -55,6 +56,8 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Evan Thibodeau
@@ -171,6 +174,12 @@ public class OnboardingFormInstanceRecordModelListener
 				ServiceContext serviceContext =
 					ServiceContextThreadLocal.getServiceContext();
 
+				HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+				httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, serviceContext.getThemeDisplay());
+
+				serviceContext.setRequest(httpServletRequest);
+
 				try {
 					_userLocalService.addUserWithWorkflow(
 						creatorUserId, companyId, autoPassword, password1,
@@ -197,8 +206,6 @@ public class OnboardingFormInstanceRecordModelListener
 		catch (PortalException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("onAfterUpdate");
 	}
 
 	private boolean _getBooleanValue(
