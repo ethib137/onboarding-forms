@@ -82,6 +82,7 @@ public class OBFormEntryLocalServiceImpl
 		obFormEntry.setName(name);
 		obFormEntry.setFormId(formId);
 		obFormEntry.setActive(true);
+		obFormEntry.setSendEmail(true);
 		obFormEntry.setExpandoBridgeAttributes(serviceContext);
 
 		resourceLocalService.addResources(
