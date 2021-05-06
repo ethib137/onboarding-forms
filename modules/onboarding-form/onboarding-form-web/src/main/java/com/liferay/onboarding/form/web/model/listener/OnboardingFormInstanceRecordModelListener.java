@@ -54,10 +54,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Evan Thibodeau
@@ -171,12 +171,15 @@ public class OnboardingFormInstanceRecordModelListener
 				long[] roleIds = obFormEntry.getRoleIdsAsLongs();
 				long[] userGroupIds = obFormEntry.getUserGroupIdsAsLongs();
 				boolean sendEmail = obFormEntry.getSendEmail();
+
 				ServiceContext serviceContext =
 					ServiceContextThreadLocal.getServiceContext();
 
-				HttpServletRequest httpServletRequest = serviceContext.getRequest();
+				HttpServletRequest httpServletRequest =
+					serviceContext.getRequest();
 
-				httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, serviceContext.getThemeDisplay());
+				httpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, serviceContext.getThemeDisplay());
 
 				serviceContext.setRequest(httpServletRequest);
 
